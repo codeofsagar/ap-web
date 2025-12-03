@@ -35,10 +35,10 @@ export default function Work() {
     >
       <h2 className="flex justify-between w-full mb-6 lg:mb-8">
         <Copy>
-         <span style={accentStyle} className="text-6xl ">Our Work</span>
+         <span style={accentStyle} className="md:text-6xl text-4xl ">Our Work</span>
         </Copy>
         <Copy delay={0.2}>
-          <span style={accentStyle} className="text-6xl ">
+          <span style={accentStyle} className="text-4xl md:text-6xl ">
             &apos;25
           </span>
         </Copy>
