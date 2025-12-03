@@ -9,11 +9,12 @@ import HeroSection from "@/components/sections/HeroSection";
 import AboutSection from "@/components/sections/AboutSection";
 import PackageSection from "@/components/sections/PackageSection";
 import ReviewsSection from "@/components/sections/ReviewsSection";
+import HomeContact from "@/components/sections/HomeContact";
 
 
 export default function Home() {
   return (
-    <main className="">
+    <main className=" ">
       <HeroSection/>
       
       <AboutSection/>
@@ -24,6 +25,7 @@ export default function Home() {
       <Services />
       <TechnologiesList />
       <ReviewsSection/>
+      <HomeContact/>
     </main>
   );
 }

@@ -219,8 +219,11 @@ useEffect(() => {
           transition={{ duration: 0.8 }}
         >
           <motion.h2 
-            className="font-bold text-3xl sm:text-4xl md:text-4xl lg:text-5xl  uppercase mt-0 md:mt-12 xl:text-7xl xl:mb-6  " 
-            style={{color:"#B9935B"}}
+            className="font-bold text-3xl sm:text-4xl md:text-4xl lg:text-5xl  uppercase mt-0 md:mt-12 xl:text-7xl xl:mb-6   " 
+             style={{
+    color: "#B9935B",
+    fontFamily: "Druk Wide Cy Web Bold Regular"
+  }}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -244,9 +247,15 @@ useEffect(() => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
-                Turn <span  style={{color:"#B9935B"}}>Clicks  </span>
+                Turn <span   style={{
+    color: "#B9935B",
+    fontFamily: "Druk Wide Cy Web Bold Regular"
+  }}>Clicks  </span>
                 
-                Into <span style={{color:"#B9935B"}}>Clients</span>.
+                Into <span  style={{
+    color: "#B9935B",
+    fontFamily: "Druk Wide Cy Web Bold Regular"
+  }}>Clients</span>.
               </motion.h1>
 
               <motion.div 
@@ -271,23 +280,24 @@ useEffect(() => {
               className="pt-4"
             >
               <button
-      className="text-black font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg text-base md:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-      style={{ background: "#B9935B" }}
-      onClick={(e) => {
-        e.preventDefault();
-        if (pathname === "/contact") return;
-        router.push("/contact", { onTransitionReady: pageTransition });
-      }}
-    >
-      Build My Page Now
-    </button>
+                className="text-black font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg text-base md:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
+                style={{ background: "#B9935B" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (pathname === "/contact") return;
+                  router.push("/contact", { onTransitionReady: pageTransition });
+                }}
+              >
+                Build My Page Now
+              </button>
             </motion.div>
           </motion.div>
 
           {/* Right Section - Responsive website image stack */}
           <div className="w-full flex items-center justify-center order-1 lg:order-2 "
-               >
-            <div className="relative w-72 md:w-6xl max-w-6xl h-[180px] sm:h-[280px] md:h-[400px] lg:h-[400px] ">
+              >
+            {/* --- FIX HERE: Changed md:w-6xl to md:w-full --- */}
+            <div className="relative w-72 md:w-full max-w-6xl h-[180px] sm:h-[280px] md:h-[400px] lg:h-[400px] ">
               {/* Stack of all images */}
               {websiteImages.map((image, index) => {
                 const position = getImagePosition(index);
@@ -317,6 +327,8 @@ useEffect(() => {
                     <div className={`bg-gray-800 flex items-center ${
                       isCurrent ? 'h-6 md:h-8 px-3 space-x-2' : 'h-4 md:h-6 px-2 space-x-1 max-w-full'
                     }`}>
+                      
+                      {/* --- FIX HERE: Moved dots outside of className prop --- */}
                       <div className={`flex ${
                         isCurrent ? 'space-x-2' : 'space-x-1'
                       }`}>
@@ -324,6 +336,7 @@ useEffect(() => {
                         <div className={`${isCurrent ? 'w-2 h-2' : 'w-1.5 h-1.5'} bg-yellow-500 rounded-full`}></div>
                         <div className={`${isCurrent ? 'w-2 h-2' : 'w-1.5 h-1.5'} bg-green-500 rounded-full`}></div>
                       </div>
+                      
                       <div className={`flex-1 bg-gray-700 rounded ${
                         isCurrent ? 'h-4 md:h-5 ml-3 px-2' : 'h-3 md:h-4 ml-2 px-1.5'
                       } flex items-center`}>
@@ -378,8 +391,8 @@ useEffect(() => {
        
       </div>
       
-   </div>
+    </div>
   );
 };
 
-export default HeroSection
+export default HeroSection;

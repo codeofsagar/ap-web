@@ -69,7 +69,7 @@ export default function Services() {
       <div className="flex flex-col gap-16 lg:gap-16 px-4 pt-16 lg:pt-24 pb-4">
         <div className="flex flex-col">
           <Copy>
-            <h2 className="text-5xl md:text-7xl text-white uppercase mb-4 text-center">
+            <h2 style={{fontFamily: "Druk Wide Cy Web Bold Regular"}} className="text-5xl md:text-7xl text-white uppercase mb-4 text-center">
               Our Services
             </h2>
           </Copy>
@@ -84,7 +84,7 @@ export default function Services() {
           </Copy>
         </div>
 
-        <div className="flex flex-col bg-black/20 backdrop-blur-sm rounded-xl lg:rounded-2xl px-4 lg:px-5 text-[#B9935B] border border-neutral-700">
+        <div className="flex flex-col bg-black/20 backdrop-blur-sm rounded-xl lg:rounded-2xl px-4 lg:px-5 text-[#B9935B] border border-neutral-700" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}>
           <ServicesList />
         </div>
       </div>

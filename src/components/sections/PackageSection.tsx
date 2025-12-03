@@ -1,284 +1,221 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
-import { Check } from 'lucide-react';
-
-
-
-
+import { Check, ArrowRight } from 'lucide-react';
 
 function PackageSection() {
-  const headerRef1 = useRef(null);
-  const headerRef2 = useRef(null);
-  const guaranteeRef = useRef(null);
-  const icon1Ref = useRef(null);
-  const icon2Ref = useRef(null);
-  const icon3Ref = useRef(null);
-  const priceRef = useRef(null);
-  const buttonRef = useRef(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const guaranteeRef = useRef<HTMLDivElement>(null);
+
+  // Reusable Accent Style
+  const accentStyle: React.CSSProperties = {
+    color: "#B9935B",
+    fontFamily: "Druk Wide Cy Web Bold Regular",
+    textTransform: "uppercase",
+  };
+
+  const features = [
+    { title: "Design", desc: "Custom high-converting layout (Mobile + Desktop)" },
+    { title: "Copywriting", desc: "Psychology-based copy to convert cold traffic" },
+    { title: "Tech Stack", desc: "Speed-optimized, clean code (Next.js/React)" },
+    { title: "Integration", desc: "Seamless CRM & Email form connection" },
+    { title: "Tracking", desc: "Pixel, Analytics & Conversion events setup" },
+    { title: "Testing", desc: "A/B Variant included for headline testing" },
+    { title: "Support", desc: "7-Day post-launch monitoring + 1 Revision round" }
+  ];
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Header animations
-    const headers = [
-      { ref: headerRef1, end: "top 80%" },
-      { ref: headerRef2, end: "top 70%" },
-      { ref: guaranteeRef, end: "top 60%" }
-    ];
-
-    headers.forEach(header => {
-      gsap.from(header.ref.current, {
-        scrollTrigger: {
-          trigger: header.ref.current,
-          start: "top 100%",
-          end: header.end,
-          scrub: true,
-        },
-        y: "100%",
-      });
-    });
-
-    // Content fade-in
-    gsap.from(".feature-item", {
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".feature-item",
+        trigger: containerRef.current,
         start: "top 80%",
-        end: "top 70%",
+        end: "bottom bottom",
+        toggleActions: "play none none reverse",
       },
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.1,
     });
 
-    // Price animation
-    gsap.from(priceRef.current, {
-      scrollTrigger: {
-        trigger: priceRef.current,
-        start: "top 90%",
-        end: "top 70%",
-        scrub: true,
-      },
+    // 1. Header Reveal
+    tl.from(".header-anim", {
       y: 100,
       opacity: 0,
-      duration: 1
+      duration: 1,
+      stagger: 0.1,
+      ease: "power4.out",
     });
 
-    // Button animation
-    gsap.from(buttonRef.current, {
-      scrollTrigger: {
-        trigger: buttonRef.current,
-        start: "top 90%",
-        end: "top 70%",
-      },
+    // 2. Grid Items Reveal (Cards)
+    tl.from(".bento-card", {
+      y: 50,
       opacity: 0,
-      scale: 0.8,
       duration: 0.8,
-      delay: 0.5
-    });
+      stagger: 0.1,
+      ease: "power2.out",
+    }, "-=0.5");
 
-    // Icon animations
-    gsap.to(icon1Ref.current, {
-      y: 20,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
-    
-    gsap.to(icon2Ref.current, {
-      y: -15,
-      duration: 3.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 0.5
-    });
-    
-    gsap.to(icon3Ref.current, {
-      y: 10,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 1
-    });
-  });
+    // 3. Feature List Items
+    tl.from(".feature-row", {
+      x: -20,
+      opacity: 0,
+      duration: 0.5,
+      stagger: 0.05,
+    }, "-=0.5");
 
-  const features = [
-    "1 custom high-converting landing page (desktop + mobile)",
-    "Copywriting designed to convert cold traffic",
-    "On-brand design optimized for speed & flow",
-    "Form integration with your CRM or email platform",
-    "Pixel, analytics, and conversion tracking setup",
-    "A/B variant included for testing (headline or layout)",
-    "7-day post-launch monitoring + 1 revision"
-  ];
+    // 4. Guarantee Reveal
+    tl.from(guaranteeRef.current, {
+      scale: 0.95,
+      opacity: 0,
+      duration: 1,
+      ease: "expo.out",
+    }, "-=0.2");
+
+  }, { scope: containerRef });
 
   return (
-     
     <section
+      ref={containerRef}
       id="packages"
-      className="min-h-[100dvh] text-bridal-health flex flex-col justify-center px-4 py-12 lg:px-12 relative overflow-hidden"
-      
+      className="relative min-h-screen flex flex-col justify-center py-20 px-4 lg:px-12 text-white overflow-hidden"
     >
-      {/* Centered Headers */}
-      <div className="flex flex-col items-center text-center lg:text-left lg:items-start">
-        <div className="mask overflow-hidden">
-          <h2 ref={headerRef1} className="text-4xl lg:text-6xl uppercase" style={{ color: 'white' }}>
-            Landing Page Lead Booster
+      
+      {/* --- HEADER SECTION --- */}
+      <div ref={headerRef} className="mb-16 lg:mb-24 flex flex-col items-start relative z-10">
+        <div className="overflow-hidden">
+          <h2 className="header-anim text-sm md:text-base tracking-[0.3em] uppercase text-gray-400 mb-4">
+            The Package
           </h2>
         </div>
-        <div className="mask overflow-hidden">
-          <h2
-            ref={headerRef2}
-            className="text-4xl lg:text-6xl uppercase mt-0 md:mt-5"
-            style={{ color: '#B9935B' }}
-          >
-            The Closer
+        <div className="overflow-hidden">
+          <h2 className="header-anim text-4xl md:text-6xl lg:text-8xl leading-[0.9]">
+            LANDING PAGE <br />
+            <span style={accentStyle}>LEAD BOOSTER</span>
           </h2>
         </div>
       </div>
-      
-      {/* Content Section */}
-      <div className="flex flex-col lg:flex-row gap-8 mt-8 lg:mt-12">
-        {/* Left Column */}
-        <div className="flex flex-col gap-8 lg:w-1/2">
-          {/* Video Container */}
-          <div className="relative w-full h-80 lg:h-full rounded-lg overflow-hidden">
-            <video 
+
+      {/* --- BENTO GRID LAYOUT --- */}
+      <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
+        
+        {/* CARD 1: VIDEO & TARGET AUDIENCE (Span 5) */}
+        <div className="bento-card lg:col-span-5 relative group overflow-hidden rounded-sm border border-[#B9935B]/20 bg-[#0a0a0a]">
+          {/* Video Background */}
+          <div className="absolute inset-0 z-0">
+             <video 
               autoPlay 
               loop 
               muted 
               playsInline
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700"
             >
               <source src="/music/music.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
-            <div className="absolute inset-0 bg-[#3F3F45] mix-blend-multiply opacity-70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
           </div>
-          
-          <div>
-            <h3 className="text-2xl lg:text-5xl mb-4  mt-0 md:mt-5" style={{ color: '#B9935B' }}>Who it&#39;s for:</h3>
-            <ul className="space-y-5 text-lg lg:text-xl text-white">
+
+          {/* Content Overlay */}
+          <div className="relative z-10 p-8 h-full flex flex-col justify-end">
+            <h3 className="text-2xl mb-6 border-b border-[#B9935B]/50 pb-4 inline-block" style={accentStyle}>
+              Who is this for?
+            </h3>
+            <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <span className="text-[#B9935B]">•</span>
-                <span>Anyone running paid ads (Google, Meta, TikTok, YouTube, etc.)</span>
+                <span className="text-[#B9935B] mt-1">●</span>
+                <span className="text-lg text-gray-200">Founders tired of design fluff and want <span className="text-white font-bold">ROI</span>.</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-[#B9935B]">•</span>
-                <span>Businesses tired of getting clicks but no customers</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-[#B9935B]">•</span>
-                <span>Founders who want ROI, not design fluff</span>
+                <span className="text-[#B9935B] mt-1">●</span>
+                <span className="text-lg text-gray-200">Businesses running paid ads getting clicks but <span className="text-white font-bold">no customers</span>.</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Right Column */}
-        <div className="flex flex-col gap-8 lg:w-1/3  ml-0 md:ml-32">
-          <div>
-            <h3 className="text-2xl lg:text-5xl mb-4" style={{ color: '#B9935B' }}>What You Get:</h3>
-            <div className="space-y-3 text-xl">
-              {features.map((feature, index) => (
-                <div 
-                  key={index} 
-                  className="feature-item flex items-start gap-3 p-3 rounded-lg"
-                >
-                  <Check className="flex-shrink-0 mt-1" style={{ color: '#B9935B' }} size={20} />
-                  <span className="text-white">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* CARD 2: SPECS / FEATURES (Span 7) */}
+        <div className="bento-card lg:col-span-7 flex flex-col border border-[#B9935B]/20 bg-[#0a0a0a]/80 backdrop-blur-sm p-8 rounded-sm">
+           <div className="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+             <h3 className="text-xl text-gray-400 uppercase tracking-widest">Specifications</h3>
+             <span style={accentStyle} className="text-sm">Everything included</span>
+           </div>
+
+           <div className="flex flex-col gap-4 flex-grow">
+             {features.map((item, idx) => (
+               <div key={idx} className="feature-row flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-8 py-3 border-b border-gray-800/50 hover:border-[#B9935B]/30 transition-colors">
+                  <div className="flex items-center gap-3 min-w-[150px]">
+                    <Check size={16} className="text-[#B9935B]" />
+                    <span className="uppercase text-sm font-bold tracking-wide text-gray-300">{item.title}</span>
+                  </div>
+                  <span className="text-gray-400 text-sm md:text-right font-light">{item.desc}</span>
+               </div>
+             ))}
+           </div>
+        </div>
+
+        {/* CARD 3: PRICING & CTA (Span 12 - Full Width Bottom) */}
+        <div className="bento-card lg:col-span-12 mt-4 flex flex-col md:flex-row items-center border border-[#B9935B] bg-[#B9935B]/5 p-8 md:p-12 rounded-sm relative overflow-hidden">
+          {/* Animated Sheen Effect Background */}
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-[#B9935B]/10 to-transparent -skew-x-12 translate-x-[-100%] animate-pulse" />
           
-          <div>
-            <div ref={priceRef} className="text-5xl lg:text-6xl mb-2" style={{ color: '#B9935B' }}>
-              $949
-            </div>
-            <p className="text-white mb-6">Flat Rate (payment plan available)</p>
-            
-            <Link
-              href="/contact"
-              ref={buttonRef}
-              className="text-sm lg:text-base tracking-wide uppercase px-6 py-3 w-full max-w-xs text-center transition-all hover:bg-[#B9935B] hover:text-white border border-[#B9935B]"
-              style={{ 
-                backgroundColor: 'transparent',
-                color: '#B9935B',
-              }}
+          <div className="flex-1 z-10 text-center md:text-left mb-8 md:mb-0">
+             <p className="text-sm uppercase tracking-[0.2em] text-[#B9935B] mb-2">Total Investment</p>
+             <div className="flex items-baseline justify-center md:justify-start gap-2">
+               <span className="text-6xl md:text-8xl leading-none text-white" style={accentStyle}>$949</span>
+               <span className="text-gray-400 text-lg">/ flat rate</span>
+             </div>
+             <p className="text-xs text-gray-500 mt-2 uppercase tracking-wide">Payment plans available upon request</p>
+          </div>
+
+          <div className="z-10">
+            <Link 
+              href="/contact" 
+              className="group relative inline-flex items-center justify-center px-12 py-6 bg-[#B9935B] text-black overflow-hidden font-bold uppercase tracking-wider text-sm transition-all hover:bg-white hover:text-black"
             >
-              Ignite Your Conversions
+              <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-96 group-hover:h-96 opacity-10"></span>
+              <span className="relative flex items-center gap-2">
+                Ignite Your Conversions <ArrowRight size={18} />
+              </span>
             </Link>
           </div>
         </div>
+
       </div>
 
-      {/* Guarantee Section */}
-      <div className="mt-12 lg:mt-16">
-        <div className="mask overflow-hidden">
-          <Link href="/contact" 
-            ref={guaranteeRef} 
-            className="text-3xl lg:text-4xl uppercase text-center"
-            style={{ color: '#B9935B' }}
-          >
-            Iron-Clad Guarantee
-          </Link>
+      {/* --- GUARANTEE BADGE --- */}
+      <div ref={guaranteeRef} className="mt-20 border-t border-dashed border-gray-700 pt-12 relative">
+        <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-start justify-between">
+          
+          <div className="max-w-2xl text-center lg:text-left">
+            <h3 className="text-2xl lg:text-3xl mb-4 leading-snug">
+              THE <span style={accentStyle} className="border-b-2 border-[#B9935B]">IRON-CLAD</span> GUARANTEE
+            </h3>
+           <p className="text-gray-400 leading-relaxed text-lg">
+  If your new landing page doesn&apos;t hit a{" "}
+  <span className="text-white font-bold">10% conversion rate</span> or
+  significantly outperform your current one within 30 days, we&apos;ll optimize it
+  again for free.
+</p>
+
+          </div>
+
+          <div className="border border-[#B9935B] p-6 text-center min-w-[300px] rotate-[-2deg] bg-black hover:rotate-0 transition-transform duration-300 shadow-[0_0_30px_rgba(185,147,91,0.1)]">
+            <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Risk Reversal</p>
+            <p className="text-xl leading-tight" style={accentStyle}>
+              STILL NO RESULTS?<br />
+              <span className="text-white">100% MONEY BACK.</span>
+            </p>
+          </div>
+
         </div>
-        
-        <div className="text-center mt-6 max-w-3xl mx-auto">
-          <p className="text-lg lg:text-xl text-white">
-           If your new landing page doesn&#39;t hit a 10%+ conversion rate or significantly 
-  outperform your current one within 30 days, we&#39;ll optimize it again for free.
-          </p>
-          <p className="text-xl lg:text-2xl mt-4" style={{ color: '#B9935B' }}>
-            Still doesn&#39;t hit? You get your money back. No questions. No excuses.
-          </p>
-        </div>
       </div>
 
-      {/* Animated Icons */}
-      <div ref={icon1Ref} className="absolute left-[85%] top-[15%] hidden ">
-        <Image
-          src="/images/urchinIcon.png"
-          alt="Urchin Icon"
-          width={64}
-          height={64}
-          className="spin"
-        />
-      </div>
-
-      <div ref={icon2Ref} className="absolute left-[10%] top-[50%] hidden ">
-        <Image
-          src="/images/tubularIcon.png"
-          alt="Tubular Icon"
-          width={64}
-          height={64}
-          className="spin"
-        />
-      </div>
-
-      <div ref={icon3Ref} className="absolute left-[80%] bottom-[20%] hidden ">
-        <Image
-          src="/images/flowerSwiss.png"
-          alt="Flower Icon"
-          width={64}
-          height={64}
-          className="spin"
-        />
-      </div>
     </section>
-   
   );
 }
-
-
 
 export default PackageSection;

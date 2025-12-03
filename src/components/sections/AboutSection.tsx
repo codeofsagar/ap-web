@@ -1,214 +1,193 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 
-
 function AboutSection() {
-  const headerRef1 = useRef(null);
-  const headerRef2 = useRef(null);
-  const headerRef3 = useRef(null);
-  const icon1Ref = useRef(null);
-  const icon2Ref = useRef(null);
-  const icon3Ref = useRef(null);
-  const stat1Ref = useRef(null);
-  const stat2Ref = useRef(null);
+  // FIX: Changed HTMLSectionElement to HTMLElement to fix the TS error
+  const containerRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  const accentStyle: React.CSSProperties = {
+    color: "#B9935B",
+    fontFamily: "Druk Wide Cy Web Bold Regular",
+    textTransform: "uppercase",
+  };
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Header animations
-    const headers = [
-      { ref: headerRef1, end: "top 80%" },
-      { ref: headerRef2, end: "top 70%" },
-      { ref: headerRef3, end: "top 60%" },
-    ];
-
-    headers.forEach(header => {
-      gsap.from(header.ref.current, {
-        scrollTrigger: {
-          trigger: header.ref.current,
-          start: "top 100%",
-          end: header.end,
-          scrub: true,
-        },
-        y: "100%",
-      });
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 75%",
+        end: "bottom bottom",
+        toggleActions: "play none none reverse",
+      },
     });
 
-    // Content fade-in
-    gsap.from(".bio", {
-      scrollTrigger: {
-        trigger: ".bio",
-        start: "top 80%",
-        end: "top 70%",
-      },
-      opacity: 0,
-      duration: 1,
-      stagger: 0.5,
-    });
-
-    // Stats animations
-    gsap.from([stat1Ref.current, stat2Ref.current], {
-      scrollTrigger: {
-        trigger: stat1Ref.current,
-        start: "top 90%",
-        end: "top 70%",
-        scrub: true,
-      },
+    // 1. Reveal Title Words
+    tl.from(".word-anim", {
       y: 100,
       opacity: 0,
-      stagger: 0.3
+      duration: 1,
+      stagger: 0.1,
+      ease: "power4.out",
     });
 
-    // Icon animations
-    gsap.to(icon1Ref.current, {
-      y: 20,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
-    
-    gsap.to(icon2Ref.current, {
-      y: -15,
-      duration: 3.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      delay: 0.5
-    });
-    
-    gsap.to(icon3Ref.current, {
-      y: 10,
+    // 2. Reveal Image & Text Content
+    tl.from(
+      [contentRef.current, imageRef.current],
+      {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+      },
+      "-=0.5"
+    );
+
+    // 3. Stats Separation Line & Numbers
+    tl.from(".stat-item", {
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "back.out(1.7)",
+    }, "-=0.5");
+
+    // Parallax Icons
+    gsap.to(".floating-icon", {
+      y: "30px",
+      rotation: 10,
       duration: 4,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut",
-      delay: 1
+      stagger: {
+        amount: 2,
+        from: "random",
+      } as gsap.StaggerVars,
     });
-  });
+  }, { scope: containerRef });
 
   return (
-   
     <section
+      ref={containerRef}
       id="about"
-      className="min-h-[100dvh] text-bridal-health flex flex-col justify-center px-4 py-5  lg:px-12 relative overflow-hidden"
-      
+      className="relative min-h-screen flex flex-col justify-center py-20 overflow-hidden text-white"
     >
-      {/* Animated Headers - Centered */}
-      <div className="flex flex-col items-center text-center lg:text-left lg:items-start">
-        <div className="mask overflow-hidden">
-          <h2 ref={headerRef1} className="text-4xl lg:text-5xl uppercase" style={{ color: 'white' }}>
-            You can have the best ads
-          </h2>
-        </div>
-        <div className="mask overflow-hidden">
-          <h2
-            ref={headerRef2}
-            className="text-4xl lg:text-5xl uppercase  mt-0 md:mt-5"
-            style={{ color: '#B9935B' }}
-          >
-            in the world<span className="text-white">, BUT</span>
-          </h2>
-        </div>
-        <div className="mask overflow-hidden">
-          <h2 
-            ref={headerRef3} 
-            className="text-4xl lg:text-5xl  uppercase   mt-2 text-white   md:mt-5"  
-           
-          >
-            your landing  <span className="" style={{ color: '#B9935B' }}> page SUCKS ?
-            </span>
-          </h2>
-        </div>
-      </div>
-      
-      {/* Content Section - Centered and Compact */}
-      <div className="flex flex-col lg:flex-row gap-16 mt-8 lg:mt-12 items-center justify-center">
-        {/* Image Container */}
-        <div className="relative w-full max-w-2xl h-60 lg:h-96 rounded-lg overflow-hidden">
-          <Image
-            src="/images/ss.png"
-            alt="Conversion rate skyrocketing"
-            fill
-            className="object-center object-cover"
-          />
-         
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        
+        {/* --- HERO TEXT SECTION --- */}
+        <div ref={titleRef} className="flex flex-col gap-2 mb-16 lg:mb-24">
+          {/* Line 1 */}
+          <div className="overflow-hidden">
+            <h2 className="text-3xl md:text-5xl lg:text-7xl font-light tracking-tight leading-[1.1]">
+              <span className="word-anim inline-block mr-4">You have the</span>
+              <span className="word-anim inline-block" style={accentStyle}>
+                BEST ADS
+              </span>
+            </h2>
+          </div>
+          
+          {/* Line 2 */}
+          <div className="overflow-hidden">
+            <h2 className="text-3xl md:text-5xl lg:text-7xl font-light tracking-tight leading-[1.1]">
+              <span className="word-anim inline-block mr-4">in the world,</span>
+              <span className="word-anim inline-block opacity-70 italic font-serif mr-4">but...</span>
+            </h2>
+          </div>
+
+          {/* Line 3 - BIG IMPACT */}
+          <div className="overflow-hidden mt-2">
+            <h2 className="text-4xl md:text-6xl lg:text-8xl leading-[1]">
+              <span className="word-anim inline-block mr-4">Your landing page</span>
+              <span className="word-anim inline-block border-b-4 border-[#B9935B]" style={accentStyle}>
+                SUCKS?
+              </span>
+            </h2>
+          </div>
         </div>
 
-        {/* Text Content */}
-        <div className="flex flex-col gap-4 max-w-2xl">
-          <div className="flex flex-col gap-4">
-            <p className="text-lg md:text-4xl bio text-white text-center lg:text-left">
-              <span className="" style={{ color: '#B9935B' }}>You&#39;re throwing money in the fire.</span> Our landing pages don&#39;t just look pretty—they
- <span className="" style={{ color: '#B9935B' }}>convert visitors into customers</span>. Fast loading, clean design, and strategic psychology <span className="" style={{ color: '#B9935B' }}>turn clicks into cash</span>. <span className="" style={{ color: '#B9935B' }}>Stop burning ad spend</span> and start building revenue machines.
+        {/* --- GRID CONTENT SECTION --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+          
+          {/* Column 1: Text Content (Span 5) */}
+          <div ref={contentRef} className="lg:col-span-5 flex flex-col justify-between h-full gap-8">
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light">
+              You are throwing <span style={accentStyle} className="text-sm md:text-base mx-1">MONEY</span> 
+              into the <span style={accentStyle} className="text-sm md:text-base mx-1">FIRE</span>.
+              <br /><br />
+              Our landing pages don&apos;t just look pretty—they convert visitors into customers. 
+              Fast loading, clean design, and strategic psychology turn clicks into cash.
             </p>
 
-            <div className="flex justify-center lg:justify-start">
-              <Link
+            <div className="pt-4">
+               <Link
                 href="#conversion"
-                className="text-xs lg:text-sm tracking-wide uppercase  px-6 py-3 bio transition-all hover:bg-[#B9935B] hover:text-white border border-[#B9935B]"
-                style={{ 
-                  backgroundColor: 'transparent',
-                  color: '#B9935B'
-                }}
+                className="group relative inline-flex items-center gap-3 text-[#B9935B] text-sm tracking-[0.2em] uppercase font-bold"
               >
-                Ignite Your Conversions
+                <span className="w-12 h-[1px] bg-[#B9935B] transition-all group-hover:w-20"></span>
+                Ignite Conversions
               </Link>
             </div>
           </div>
+
+          {/* Column 2: Image (Span 7) */}
+          <div ref={imageRef} className="lg:col-span-7 relative">
+            <div className="relative w-full aspect-[16/9] lg:aspect-[16/8] rounded-none border border-[#B9935B]/30 overflow-hidden">
+               {/* Overlay Gradient for text readability */}
+               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+               <Image
+                src="/images/ss.png"
+                alt="Conversion rate skyrocketing"
+                fill
+                className="object-cover transition-transform duration-[2s] hover:scale-105"
+              />
+            </div>
+            {/* Decorative box behind image */}
+            <div className="absolute -bottom-6 -right-6 w-full h-full border border-[#B9935B]/20 -z-10 hidden lg:block" />
+          </div>
+        </div>
+
+        {/* --- STATS FOOTER --- */}
+        <div ref={statsRef} className="mt-24 pt-12 border-t border-[#B9935B]/40 grid grid-cols-1 md:grid-cols-2 gap-12">
+          
+          <div className="stat-item">
+            <div className="text-5xl md:text-7xl mb-2" style={accentStyle}>90%</div>
+            <p className="text-gray-400 text-sm tracking-wide uppercase">
+              of visitors bounce in <br />the first 3 seconds
+            </p>
+          </div>
+
+          <div className="stat-item md:text-right">
+             <div className="text-5xl md:text-7xl mb-2" style={accentStyle}>3.2X</div>
+            <p className="text-gray-400 text-sm tracking-wide uppercase">
+              better conversion than <br />industry averages
+            </p>
+          </div>
+
         </div>
       </div>
 
-      {/* Stats Section - Centered */}
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24 mt-12 lg:mt-16 text-center">
-        <div ref={stat1Ref} className="text-6xl lg:text-7xl  leading-none" style={{ color: '#B9935B' }}>
-          90%<span className="text-white text-lg lg:text-xl font-normal block mt-2">of visitors bounce in the first 3 seconds</span>
-        </div>
-        
-        <div ref={stat2Ref} className="text-6xl lg:text-7xl  leading-none" style={{ color: '#B9935B' }}>
-          3.2X<span className="text-white text-lg lg:text-xl font-normal block mt-2">better conversion than industry averages</span>
-        </div>
+      {/* --- FLOATING ICONS (DECORATION) --- */}
+      <div className="floating-icon absolute top-20 right-[5%] opacity-20 pointer-events-none w-24 h-24">
+        <Image src="/images/urchinIcon.png" alt="Icon" fill className="object-contain" />
+      </div>
+      <div className="floating-icon absolute bottom-40 left-[5%] opacity-20 pointer-events-none w-32 h-32">
+         <Image src="/images/flowerSwiss.png" alt="Icon" fill className="object-contain" />
       </div>
 
-      {/* Animated Icons - Positioned to avoid content */}
-      <div ref={icon1Ref} className="absolute left-[85%] top-[15%] hidden lg:block">
-        <Image
-          src="/images/urchinIcon.png"
-          alt="Urchin Icon"
-          width={64}
-          height={64}
-          className="spin"
-        />
-      </div>
-
-      <div ref={icon2Ref} className="absolute left-[10%] top-[50%] hidden ">
-        <Image
-          src="/images/tubularIcon.png"
-          alt="Tubular Icon"
-          width={64}
-          height={64}
-          className="spin"
-        />
-      </div>
-
-      <div ref={icon3Ref} className="absolute left-[80%] bottom-[20%] hidden lg:block">
-        <Image
-          src="/images/flowerSwiss.png"
-          alt="Flower Icon"
-          width={64}
-          height={64}
-          className="spin"
-        />
-      </div>
     </section>
-  
   );
 }
-
 
 export default AboutSection;

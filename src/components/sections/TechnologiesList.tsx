@@ -69,7 +69,7 @@ export default function TechnologiesLit() {
       <section className="pb-20 md:pb-0 px-4 lg:px-8 relative z-10">
         <LetterScroll />
 
-        <h4 className="font-semibold text-4xl md:text-6xl uppercase mb-4 text-[#B9935B] pt-2">
+        <h4 className="font-semibold text-4xl md:text-6xl uppercase mb-4 text-[#B9935B] pt-2" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}>
           Our TechStack
         </h4>
         
@@ -465,9 +465,9 @@ function LetterScroll() {
   return (
     <ul
       ref={containerRef}
-      className="letter-scroll flex flex-col justify-center items-center h-[400px] lg:h-[800px] py-24"
+      className="letter-scroll flex flex-col justify-center items-center h-[400px] lg:h-[800px] py-24" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}
     >
-      <li className="text-[clamp(48px,14vw,250px)] font-bold  overflow-hidden flex text-white">
+      <li style={{fontFamily: "Druk Wide Cy Web Bold Regular"}} className="text-[clamp(40px,12vw,220px)] font-bold  overflow-hidden flex text-white">
         <span className="letter relative inline-block">
           <span>M</span>
           <span className="absolute bottom-full left-0">M</span>
@@ -493,8 +493,8 @@ function LetterScroll() {
           <span className="absolute bottom-full left-0">N</span>
         </span>
       </li>
-      <li className="text-[clamp(48px,14vw,250px)] font-bold tracking-tight leading-[0.9] lg:leading-[0.85] overflow-hidden flex text-white">
-        <span className="letter relative inline-block ">
+      <li className="text-[clamp(30px,8vw,200px)] font-bold tracking-tight leading-[0.9] lg:leading-[0.85] overflow-hidden flex text-white" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}>
+        <span className="letter relative inline-block " >
           <span>T</span>
           <span className="absolute bottom-full left-0">T</span>
         </span>

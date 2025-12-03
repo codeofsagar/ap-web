@@ -1,342 +1,219 @@
 "use client";
-import Image from "next/image";
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import gsap from "gsap";
-import { Send, Mail, MapPin, Phone } from 'lucide-react';
-
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
+import { Send, Mail, MapPin, Phone, Clock } from 'lucide-react';
 
 function Contact() {
   const containerRef = useRef(null);
-  const headerRef1 = useRef(null);
-  const headerRef2 = useRef(null);
-  const headerRef3 = useRef(null);
-  const formRef = useRef(null);
-  const infoRef = useRef(null);
-  const guaranteeRef = useRef(null);
+  
 
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Header animations
-    const headers = [
-      { ref: headerRef1, delay: 0 },
-      { ref: headerRef2, delay: 0.1 },
-      { ref: headerRef3, delay: 0.2 },
-    ];
-
-    headers.forEach(header => {
-      gsap.from(header.ref.current, {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        delay: header.delay,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: header.ref.current,
-          start: "top 90%",
-        }
-      });
-    });
-
-    // Content animations
-    gsap.from(infoRef.current, {
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      delay: 0.4,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: infoRef.current,
-        start: "top 90%",
-      }
-    });
-
-    gsap.from(formRef.current, {
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      delay: 0.5,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: formRef.current,
-        start: "top 90%",
-      }
-    });
-
-    // Guarantee animation
-    gsap.from(guaranteeRef.current, {
-      y: 20,
-      opacity: 0,
-      duration: 0.8,
-      delay: 0.7,
-      ease: "back.out(1.7)",
-      scrollTrigger: {
-        trigger: guaranteeRef.current,
-        start: "top 90%",
-      }
-    });
-
-    // Floating icons animation
-    const icons = [
-      { selector: ".icon-1", y: 20, duration: 4, delay: 0.2 },
-      { selector: ".icon-2", y: -25, duration: 5, delay: 0.5 },
-      { selector: ".icon-3", y: 15, duration: 4.5, delay: 0.8 }
-    ];
-    
-    icons.forEach(icon => {
-      gsap.to(icon.selector, {
-        y: icon.y,
-        duration: icon.duration,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: icon.delay
-      });
-    });
-  }, { scope: containerRef });
+ 
 
   return (
-    
-
-   
     <section
       id="contact"
       ref={containerRef}
-      className="min-h-[100dvh] text-bridal-health flex flex-col justify-center px-4 py-20 lg:px-12 lg:py-28 relative overflow-hidden"
-     
-     
+      className="min-h-screen text-white flex flex-col justify-center px-4 py-32 lg:px-12 lg:py-40 relative overflow-hidden "
     >
-     
-      
-      {/* Section Header */}
-      <div className="relative z-10 text-center   mt-10">
-        <div className="overflow-hidden mb-4">
-          <h2 
-            ref={headerRef1} 
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl "
-            style={{ color: '#B9935B' }}
-          >
-            Ready to convert more visitors into customers?
-          </h2>
-        </div>
-        
-        
-        
-       
+      {/* --- CUSTOM STYLES FOR ANIMATIONS --- */}
+      <style>{`
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        @keyframes float-reverse {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(20px) rotate(-5deg); }
+        }
+        .animate-float-1 { animation: float-slow 8s ease-in-out infinite; }
+        .animate-float-2 { animation: float-reverse 10s ease-in-out infinite; }
+        .animate-float-3 { animation: float-slow 12s ease-in-out infinite; }
+      `}</style>
+
+      {/* Decorative Background Grid */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
+             style={{ 
+                 backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
+                 backgroundSize: '60px 60px' 
+             }}>
       </div>
 
-      {/* Content Section */}
-      <div className="relative z-10 mt-4 max-w-6xl mx-auto">
-        <div ref={infoRef} className="flex flex-col gap-8">
-             <div ref={formRef} className="bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border border-[#2a2a2a] rounded-2xl p-8 lg:p-10 shadow-xl relative">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#B9935B] to-[#d4b37e] rounded-t-2xl"></div>
-            <form className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-white mb-2 font-medium">Full Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full bg-[#0f0f0f] border border-[#3a3a3a] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#B9935B] transition-all"
-                  placeholder="John Doe"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-white mb-2 font-medium">Work Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full bg-[#0f0f0f] border border-[#3a3a3a] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#B9935B] transition-all"
-                  placeholder="john@company.com"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="company" className="block text-white mb-2 font-medium">Company Name</label>
-                <input
-                  type="text"
-                  id="company"
-                  className="w-full bg-[#0f0f0f] border border-[#3a3a3a] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#B9935B] transition-all"
-                  placeholder="Company Inc."
-                />
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="industry" className="block text-white mb-2 font-medium">Industry</label>
-                  <select
-                    id="industry"
-                    className="w-full bg-[#0f0f0f] border border-[#3a3a3a] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#B9935B] appearance-none"
-                  >
-                    <option value="">Select your industry</option>
-                    <option value="ecommerce">E-commerce</option>
-                    <option value="saas">SaaS</option>
-                    <option value="finance">Finance</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="education">Education</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="budget" className="block text-white mb-2 font-medium">Monthly Ad Spend</label>
-                  <select
-                    id="budget"
-                    className="w-full bg-[#0f0f0f] border border-[#3a3a3a] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#B9935B] appearance-none"
-                  >
-                    <option value="">Select your monthly ad spend</option>
-                    <option value="1k-5k">$1,000 - $5,000</option>
-                    <option value="5k-20k">$5,000 - $20,000</option>
-                    <option value="20k-50k">$20,000 - $50,000</option>
-                    <option value="50k+">$50,000+</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-white mb-2 font-medium">How can we help?</label>
-                <textarea
-                  id="message"
-                  rows={5}
-                  className="w-full bg-[#0f0f0f] border border-[#3a3a3a] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#B9935B] transition-all"
-                  placeholder="Tell us about your project, goals, and timeline..."
-                ></textarea>
-              </div>
-              
-              <div className="mt-8">
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-2 text-lg font-bold py-4 px-8 rounded-lg transition-all transform hover:-translate-y-1 hover:shadow-lg"
-                  style={{ 
-                    backgroundColor: '#B9935B',
-                    color: '#1a1a1a',
-                    boxShadow: '0 4px 20px rgba(185, 147, 91, 0.3)'
-                  }}
-                >
-                  <Send size={20} />
-                  <span>Send Message</span>
-                </button>
-              </div>
-            </form>
-          </div>
-            <div className="bg-gradient-to-r from-[#1a1a1a] to-[#0f0f0f] border border-[#2a2a2a] rounded-2xl p-8 lg:p-10">
-              <h3 className="text-3xl lg:text-4xl font-bold mb-6" style={{ color: '#B9935B' }}>
-Let&#39;s Talk Growth
-              </h3>
-              
-              <p className="text-lg lg:text-xl text-white/90 mb-8">
-              We&#39;ll show you how our landing pages can transform your conversion rates within days.
- 
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-[#B9935B] p-2 rounded-full flex-shrink-0 mt-1">
-                    <Mail className="text-white" size={20} />
-                  </div>
-                  <div>
-                   <h4 className="text-lg font-semibold text-white">Email Us</h4>
-<a 
-  href="mailto:info@apagency.ca" 
-  className="text-white/80 hover:underline"
->
-  info@apagency.ca
-</a>
+      {/* --- SECTION HEADER --- */}
+      <div className="relative z-10 text-center mb-24 lg:mb-32">
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="overflow-hidden mb-8"
+        >
+          <h2 
+            className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight uppercase tracking-tight"
+            style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: '#B9935B' }}
+          >
+            Ready to convert
+            <br />
+            <span className="text-white text-transparent" style={{ WebkitTextStroke: '1px white' }}>more visitors?</span>
+          </h2>
+        </motion.div>
+        
+        <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide"
+        >
+            Book a time below for your 30-minute landing page consultation.
+        </motion.p>
+      </div>
 
-                  </div>
-                </div>
+      {/* --- MAIN CONTENT GRID --- */}
+      <div className="relative z-10 max-w-[1400px] mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+            
+            {/* Left Column: Calendly Embed */}
+            <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="bg-[#111] border border-[#2a2a2a] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 relative min-h-[750px] group hover:border-[#B9935B]/30 transition-colors duration-500"
+            >
+                {/* Gold Top Border Accent */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#B9935B] via-[#d4b37e] to-[#B9935B] z-20"></div>
                 
-                <div className="flex items-start gap-4">
-                  <div className="bg-[#B9935B] p-2 rounded-full flex-shrink-0 mt-1">
-                    <Phone className="text-white" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-white">Call Us</h4>
-                    <p className="text-white/80"> (647) 424-0504</p>
-                  </div>
+                <iframe 
+                    src="https://calendly.com/apdigitalagency/30-minute-landing-page-consultation-1?back=1&month=2025-11&hide_gdpr_banner=1&background_color=111111&text_color=ffffff&primary_color=B9935B" 
+                    width="100%" 
+                    height="100%" 
+                    frameBorder="0" 
+                    title="Calendly Scheduling Page"
+                    className="w-full h-[750px] lg:h-[800px] relative z-10"
+                ></iframe>
+            </motion.div>
+
+            {/* Right Column: Contact Info */}
+            <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="flex flex-col gap-12"
+            >
+                <div className="relative p-10 lg:p-12 rounded-3xl bg-[#111]/50 backdrop-blur-sm border border-[#2a2a2a]">
+                    <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#B9935B]/20 blur-3xl rounded-full"></div>
+                    
+                    <h3 className="text-3xl lg:text-5xl uppercase mb-8 leading-none" style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: '#B9935B' }}>
+                        Let&#39;s Talk <br /> <span className="text-white">Growth</span>
+                    </h3>
+                    
+                    <p className="text-xl text-gray-400 mb-12 font-light leading-relaxed">
+                        We&#39;ll show you how our landing pages can transform your conversion rates within days. 
+                        Can&apos;t find a time that works? Reach out directly.
+                    </p>
+                    
+                    <div className="space-y-10">
+                        {/* Email */}
+                        <a href="mailto:info@apagency.ca" className="flex items-start gap-6 group">
+                            <div className="bg-[#B9935B]/5 border border-[#B9935B]/20 p-4 rounded-full flex-shrink-0 transition-all duration-300 group-hover:bg-[#B9935B] group-hover:text-black group-hover:scale-110">
+                                <Mail size={24} className="text-[#B9935B] group-hover:text-black transition-colors" />
+                            </div>
+                            <div>
+                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold">Email Us</h4>
+                                <span className="text-2xl text-white group-hover:text-[#B9935B] transition-colors font-light">
+                                    info@apagency.ca
+                                </span>
+                            </div>
+                        </a>
+                        
+                        {/* Phone */}
+                        <div className="flex items-start gap-6 group">
+                            <div className="bg-[#B9935B]/5 border border-[#B9935B]/20 p-4 rounded-full flex-shrink-0 transition-all duration-300 group-hover:bg-[#B9935B] group-hover:text-black group-hover:scale-110">
+                                <Phone size={24} className="text-[#B9935B] group-hover:text-black transition-colors" />
+                            </div>
+                            <div>
+                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold">Call Us</h4>
+                                <p className="text-2xl text-white font-light"> (647) 424-0504</p>
+                            </div>
+                        </div>
+                        
+                        {/* Location */}
+                        <div className="flex items-start gap-6 group">
+                            <div className="bg-[#B9935B]/5 border border-[#B9935B]/20 p-4 rounded-full flex-shrink-0 transition-all duration-300 group-hover:bg-[#B9935B] group-hover:text-black group-hover:scale-110">
+                                <MapPin size={24} className="text-[#B9935B] group-hover:text-black transition-colors" />
+                            </div>
+                            <div>
+                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold">HQ Location</h4>
+                                <p className="text-lg text-white/80 font-light leading-relaxed max-w-xs">10330 Yonge St, Richmond Hill,<br/> ON L4C 5N1, Canada</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="bg-[#B9935B] p-2 rounded-full flex-shrink-0 mt-1">
-                    <MapPin className="text-white" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-white">HQ Location</h4>
-                    <p className="text-white/80">10330 Yonge St, Richmond Hill, ON L4C 5N1, Canada</p>
-                  </div>
+
+                {/* Hours Box */}
+                <div className="p-10 rounded-3xl border border-[#B9935B]/20 bg-gradient-to-br from-[#B9935B]/10 to-transparent relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-8 opacity-10">
+                        <Clock size={100} className="text-[#B9935B]" />
+                    </div>
+                    <h4 className="text-xl uppercase mb-6 flex items-center gap-3 relative z-10" style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: 'white' }}>
+                        Working Hours
+                    </h4>
+                    <div className="space-y-4 relative z-10">
+                        <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                            <span className="text-gray-400">Monday - Friday</span>
+                            <span className="text-[#B9935B] font-bold tracking-widest">09:00 - 19:00</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <span className="text-gray-400">Saturday</span>
+                            <span className="text-[#B9935B] font-bold tracking-widest">12:00 - 16:00</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              
-              <div className="mt-8 p-6 rounded-xl border border-[#B9935B]/20" style={{ backgroundColor: 'rgba(185, 147, 91, 0.08)' }}>
-                <h4 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#B9935B]" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                  </svg>
-                  Working Hours
-                </h4>
-                <p className="text-white/90">Monday-Friday: 9am - 7pm </p>
-                <p className="text-white/90">Saturday: 12am - 4pm </p>
-              </div>
-            </div>
-          </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          
-          
-          {/* Contact Form */}
-         
+            </motion.div>
         </div>
       </div>
       
       {/* Guarantee Section */}
-      <div ref={guaranteeRef} className="relative z-10 mt-16 lg:mt-20 text-center max-w-4xl mx-auto px-4">
-        <div className="inline-flex items-center gap-4 p-4 lg:p-5 rounded-full border border-[#B9935B]/30 backdrop-blur-sm" style={{ backgroundColor: 'rgba(185, 147, 91, 0.1)' }}>
-          <div className="bg-[#B9935B] rounded-full p-2">
-            <Send size={20} className="text-white" />
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="relative z-10 mt-24 lg:mt-32 text-center max-w-5xl mx-auto px-4"
+      >
+        <div className="inline-flex flex-col md:flex-row items-center gap-6 p-8 lg:p-10 rounded-3xl border border-[#B9935B]/30 backdrop-blur-xl bg-[#000]/40">
+          <div className="bg-[#B9935B] rounded-full p-4 shadow-lg shadow-[#B9935B]/20 animate-pulse">
+            <Send size={24} className="text-[#000]" />
           </div>
-          <p className="text-lg lg:text-xl text-white">
-            We respond to all inquiries within <span className="font-bold" style={{ color: '#B9935B' }}>24 business hours</span>
-          </p>
+          <div className="text-left">
+              <p className="text-xl lg:text-2xl text-white font-light">
+                We respond to all inquiries within
+              </p>
+              <p className="text-xl lg:text-3xl mt-1 uppercase" style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: '#B9935B' }}>
+                  24 business hours
+              </p>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Animated Icons - Background elements */}
-      <div className="icon-1 absolute left-[5%] top-[10%] hidden lg:flex">
-        <Image
-          src="/images/urchinIcon.png"
-          alt="Urchin Icon"
-          width={96}
-          height={96}
-          className="spin opacity-30"
-        />
-      </div>
+     
 
-      <div className="icon-2 absolute left-[85%] top-[20%] hidden lg:flex">
-        <Image
-          src="/images/tubularIcon.png"
-          alt="Tubular Icon"
-          width={80}
-          height={80}
-          className="spin opacity-30"
-        />
-      </div>
+      
 
-      <div className="icon-3 absolute left-[15%] bottom-[15%] hidden lg:flex">
-        <Image
-          src="/images/flowerSwiss.png"
-          alt="Flower Icon"
-          width={72}
-          height={72}
-          className="spin opacity-30"
+      <motion.div className="animate-float-3 absolute left-[15%] bottom-[10%] hidden xl:block pointer-events-none select-none opacity-10">
+        <img
+          src="https://img.icons8.com/ios/100/ffffff/flower.png"
+          alt=""
+          width={150}
+          height={150}
+          className="invert brightness-0"
         />
-      </div>
+      </motion.div>
       
       {/* Accent Elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#B9935B]/10 to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#B9935B]/5 to-transparent pointer-events-none"></div>
     </section>
- 
   );
 }
 

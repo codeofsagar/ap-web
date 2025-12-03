@@ -21,6 +21,12 @@ export default function Work() {
   });
   const router = useTransitionRouter();
 
+   const accentStyle: React.CSSProperties = {
+      color: "#B9935B",
+      fontFamily: "Druk Wide Cy Web Bold Regular",
+      textTransform: "uppercase",
+    };
+
   return (
    
     <section
@@ -29,12 +35,10 @@ export default function Work() {
     >
       <h2 className="flex justify-between w-full mb-6 lg:mb-8">
         <Copy>
-          <span className="text-4xl md:text-7xl uppercase text-[#B9935B]">
-            Our Work
-          </span>
+         <span style={accentStyle} className="text-6xl md:text-7xl">Our Work</span>
         </Copy>
         <Copy delay={0.2}>
-          <span className="text-4xl md:text-7xl uppercase text-[#B9935B]">
+          <span style={accentStyle} className="text-6xl md:text-7xl">
             &apos;25
           </span>
         </Copy>

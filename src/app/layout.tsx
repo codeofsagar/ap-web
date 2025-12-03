@@ -22,6 +22,12 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en">
+        <head>
+          <link
+            href="https://db.onlinewebfonts.com/c/0b5ecd0afcf95185925504cdca01f5e3?family=Druk+Wide+Cy+Web+Bold+Regular"
+            rel="stylesheet"
+          />
+        </head>
         <ReactLenis root options={{ 
 
         
