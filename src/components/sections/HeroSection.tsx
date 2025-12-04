@@ -219,7 +219,7 @@ useEffect(() => {
           transition={{ duration: 0.8 }}
         >
           <motion.h2 
-            className="font-bold text-3xl sm:text-4xl md:text-4xl lg:text-5xl  uppercase mt-0 md:mt-12 xl:text-7xl xl:mb-6   " 
+            className="font-bold text-3xl sm:text-2xl md:text-3xl lg:text-4xl  uppercase mt-0 md:mt-16 xl:text-7xl xl:mb-6   " 
              style={{
     color: "#B9935B",
     fontFamily: "Druk Wide Cy Web Bold Regular"
