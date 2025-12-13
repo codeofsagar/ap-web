@@ -10,8 +10,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-
-
+// --- Font Configuration ---
+const fonts = {
+  display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers / Big Text
+  mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Tech Labels / Tooltips
+  body: { fontFamily: "'Inter', sans-serif" }, // Default
+};
 
 export default function TechnologiesLit() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,18 +69,22 @@ export default function TechnologiesLit() {
   }, []);
 
   return (
-   
-      <section className="pb-20 md:pb-0 px-4 lg:px-8 relative z-10">
+    
+      <section className="pb-20 md:pb-0 px-4 lg:px-8 relative z-10" style={fonts.body}>
         <LetterScroll />
 
-        <h4 className="font-semibold text-4xl md:text-6xl uppercase mb-4 text-[#B9935B] pt-2" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}>
+        {/* Kanit for Main Header */}
+        <h4 
+          className="font-semibold text-4xl md:text-6xl uppercase mb-4 text-[#B9935B] pt-2" 
+          style={fonts.display}
+        >
           Our TechStack
         </h4>
         
-        {/* Tech name display */}
+        {/* Tech name display - IBM Plex Mono for technical label */}
         {hoveredTech && (
           <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-sm px-6 py-3 rounded-full border border-[#B9935B]/30 z-50">
-            <span className="text-[#B9935B] text-xl font-medium">{hoveredTech}</span>
+            <span className="text-[#B9935B] text-xl font-medium" style={fonts.mono}>{hoveredTech}</span>
           </div>
         )}
         
@@ -332,6 +340,7 @@ export default function TechnologiesLit() {
             <a
               href="https://motion.dev/"
               target="_blank"
+              rel="noopener noreferrer"
               className="grid-item flex items-center justify-center border-r border-b border-neutral-100 group cursor-pointer h-[clamp(200px,20vw,400px)] relative"
               onMouseEnter={() => setHoveredTech("Motion One")}
               onMouseLeave={() => setHoveredTech(null)}
@@ -465,9 +474,10 @@ function LetterScroll() {
   return (
     <ul
       ref={containerRef}
-      className="letter-scroll flex flex-col justify-center items-center h-[400px] lg:h-[800px] py-24" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}
+      className="letter-scroll flex flex-col justify-center items-center h-[400px] lg:h-[800px] py-24" 
+      style={fonts.display} // Kanit for the big scrolling text
     >
-      <li style={{fontFamily: "Druk Wide Cy Web Bold Regular"}} className="text-[clamp(40px,12vw,220px)] font-bold  overflow-hidden flex text-white">
+      <li style={fonts.display} className="text-[clamp(40px,12vw,220px)] font-bold overflow-hidden flex text-white">
         <span className="letter relative inline-block">
           <span>M</span>
           <span className="absolute bottom-full left-0">M</span>
@@ -493,7 +503,7 @@ function LetterScroll() {
           <span className="absolute bottom-full left-0">N</span>
         </span>
       </li>
-      <li className="text-[clamp(30px,8vw,200px)] font-bold tracking-tight leading-[0.9] lg:leading-[0.85] overflow-hidden flex text-white" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}>
+      <li className="text-[clamp(30px,8vw,200px)] font-bold tracking-tight leading-[0.9] lg:leading-[0.85] overflow-hidden flex text-white" style={fonts.display}>
         <span className="letter relative inline-block " >
           <span>T</span>
           <span className="absolute bottom-full left-0">T</span>

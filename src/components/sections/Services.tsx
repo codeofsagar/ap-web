@@ -5,7 +5,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
-import { lcddot } from "@/fonts";
 import Image from "next/image";
 import Copy from "@/components/layout/Copy";
 
@@ -16,6 +15,13 @@ type Service = {
   description: string;
   keywords: string[];
   image: string;
+};
+
+// --- Font Configuration ---
+const fonts = {
+  display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers
+  mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Keywords / Tech
+  body: { fontFamily: "'Inter', sans-serif" }, // Descriptions
 };
 
 const services = [
@@ -65,16 +71,21 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="px-2 lg:px-4 relative z-10">
+    <section className="px-2 lg:px-4 relative z-10" style={fonts.body}>
       <div className="flex flex-col gap-16 lg:gap-16 px-4 pt-16 lg:pt-24 pb-4">
         <div className="flex flex-col">
           <Copy>
-            <h2 style={{fontFamily: "Druk Wide Cy Web Bold Regular"}} className="text-5xl md:text-7xl text-white uppercase mb-4 text-center">
+            {/* Kanit for Main Header */}
+            <h2 
+              className="text-5xl md:text-7xl text-white uppercase mb-4 text-center"
+              style={fonts.display}
+            >
               Our Services
             </h2>
           </Copy>
           <Copy>
-            <p className="text-neutral-100 text-3xl md:text-4xl text-center max-w-4xl mx-auto">
+            {/* Inter for Narrative */}
+            <p className="text-neutral-100 text-3xl md:text-4xl text-center max-w-4xl mx-auto" style={fonts.body}>
               We transform <span className="text-[#B9935B]">digital visions</span> into 
               high-performing websites and landing pages. Through our 
               <span className="text-[#B9935B]"> strategic approach</span>, we create 
@@ -84,7 +95,7 @@ export default function Services() {
           </Copy>
         </div>
 
-        <div className="flex flex-col bg-black/20 backdrop-blur-sm rounded-xl lg:rounded-2xl px-4 lg:px-5 text-[#B9935B] border border-neutral-700" style={{fontFamily: "Druk Wide Cy Web Bold Regular"}}>
+        <div className="flex flex-col bg-black/20 backdrop-blur-sm rounded-xl lg:rounded-2xl px-4 lg:px-5 text-[#B9935B] border border-neutral-700">
           <ServicesList />
         </div>
       </div>
@@ -129,7 +140,11 @@ function ServiceCard({ service }: { service: Service }) {
       <div className="lg:col-span-5 mb-6 lg:mb-0 min-h-[4rem]">
         <div ref={titleRef} className="h-full">
           <Copy>
-            <h3 className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-medium text-[#B9935B] leading-tight">
+            {/* Kanit for Service Title */}
+            <h3 
+              className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-medium text-[#B9935B] leading-tight"
+              style={fonts.display}
+            >
               {service.title}
             </h3>
           </Copy>
@@ -139,7 +154,8 @@ function ServiceCard({ service }: { service: Service }) {
       {/* Content Section */}
       <div className="flex flex-col gap-4 lg:gap-6 lg:col-span-4 mb-8 lg:mb-0">
         <Copy>
-          <p className="text-xl md:text-2xl text-neutral-100">
+          {/* Inter for Description */}
+          <p className="text-xl md:text-2xl text-neutral-100" style={fonts.body}>
             {service.description}
           </p>
         </Copy>
@@ -159,7 +175,9 @@ function ServiceCard({ service }: { service: Service }) {
                 delay: index * 0.025,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className={`${lcddot.className} text-[10px] text-[#B9935B] uppercase tracking-[1.1] bg-[#B9935B]/10 px-2 3xl:px-3 pt-2 pb-1.5 rounded-md whitespace-nowrap`}
+              // IBM Plex Mono for Keywords (Technical Spec vibe)
+              className="text-[10px] text-[#B9935B] uppercase tracking-[1.1] bg-[#B9935B]/10 px-2 3xl:px-3 pt-2 pb-1.5 rounded-md whitespace-nowrap"
+              style={fonts.mono}
             >
               {keyword}
             </motion.li>

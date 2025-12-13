@@ -12,9 +12,16 @@ type Testimonial = {
   rating: number;
 };
 
+// --- FONT CONFIGURATION (Global for this file) ---
+const fonts = {
+  display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers / Impact
+  mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Specs / Labels / Tech
+  body: { fontFamily: "'Inter', sans-serif" }, // Descriptions / Quotes
+};
+
 // --- UTILITY COMPONENTS ---
 
-// Custom hook for intersection observer (Replacing ScrollTrigger)
+// Custom hook for intersection observer
 const useInView = (options = { threshold: 0.1, rootMargin: "0px" }) => {
   const [isInView, setIsInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -71,7 +78,7 @@ const AnimatedNumber = ({ end, duration = 2000, suffix = "" }: { end: number; du
   }, [isInView, end, duration]);
 
   return (
-    <div ref={ref} className="inline-block">
+    <div ref={ref} className="inline-block" style={fonts.display}>
       {end % 1 === 0 ? Math.round(count) : count.toFixed(1)}
       {suffix}
     </div>
@@ -147,8 +154,10 @@ const AnimatedTestimonials = ({ testimonials, autoplay = false }: { testimonials
                         <div className="flex gap-1 mb-2">
                              {renderStars(testimonial.rating)}
                         </div>
-                        <h3 className="text-xl font-bold text-white" style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}>{testimonial.name}</h3>
-                        <p className="text-[#B9935B] text-sm font-medium">{testimonial.designation}</p>
+                        {/* Kanit for Name */}
+                        <h3 className="text-xl font-bold text-white" style={fonts.display}>{testimonial.name}</h3>
+                        {/* IBM Plex Mono for Designation */}
+                        <p className="text-[#B9935B] text-sm font-medium" style={fonts.mono}>{testimonial.designation}</p>
                     </div>
                 </motion.div>
               );
@@ -171,7 +180,8 @@ const AnimatedTestimonials = ({ testimonials, autoplay = false }: { testimonials
               transition={{ duration: 0.3 }}
               className="relative"
             >
-              <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-6 font-sans">
+              {/* Inter for the Quote Text */}
+              <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-6" style={fonts.body}>
                 &quot;
                 {testimonials[active].quote.split(" ").map((word, index) => (
                   <span key={index} className={index % 2 === 0 ? "text-white" : "text-white"}>
@@ -260,7 +270,7 @@ export default function ReviewsSection() {
 
   return (
     // Background set to transparent
-    <div className="min-h-screen bg-transparent text-white relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-white relative overflow-hidden" style={fonts.body}>
        <style>{`
         @keyframes float-slow {
           0%, 100% { transform: translateY(0); }
@@ -279,8 +289,8 @@ export default function ReviewsSection() {
         {/* Decorative Grid Background - Kept subtle grid for texture over black */}
         <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
              style={{ 
-                 backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
-                 backgroundSize: '40px 40px' 
+                  backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
+                  backgroundSize: '40px 40px' 
              }}>
         </div>
 
@@ -288,7 +298,8 @@ export default function ReviewsSection() {
         <div className="relative z-10 flex flex-col items-center text-center mb-20 max-w-full px-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#B9935B]/30 bg-[#B9935B]/10 backdrop-blur-md mb-8">
                 <span className="w-2 h-2 rounded-full bg-[#B9935B] animate-pulse"></span>
-                <span className="text-xs uppercase tracking-widest text-[#B9935B] font-bold">Trusted by 247+ Companies</span>
+                {/* IBM Plex Mono for Badge */}
+                <span className="text-xs uppercase tracking-widest text-[#B9935B] font-bold" style={fonts.mono}>Trusted by 247+ Companies</span>
             </div>
 
           <motion.div
@@ -297,26 +308,28 @@ export default function ReviewsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight text-white mb-2" style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}>
+            {/* Kanit for Headlines */}
+            <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight text-white mb-2" style={fonts.display}>
               Don&#39;t Send Traffic to a
             </h2>
             <h2
               className="text-3xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight mb-2"
               style={{ 
+                  ...fonts.display,
                   color: 'transparent', 
                   WebkitTextStroke: '1px #B9935B',
                   textShadow: '0 0 30px rgba(185, 147, 91, 0.3)',
-                  fontFamily: "Druk Wide Cy Web Bold Regular"
               }}
             >
               Glorified Brochure
             </h2>
-            <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight text-white" style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}>
+            <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight text-white" style={fonts.display}>
               Send it to a <span className="text-[#B9935B] underline decoration-[#B9935B] underline-offset-8">Buying Machine</span>
             </h2>
           </motion.div>
 
-          <p className="mt-8 text-lg md:text-xl text-gray-400 max-w-2xl leading-relaxed">
+          {/* Inter for Description */}
+          <p className="mt-8 text-lg md:text-xl text-gray-400 max-w-2xl leading-relaxed" style={fonts.body}>
             Stop burning ad spend on pages that don&apos;t convert. We build high-performance landing pages engineered to maximize your ROI.
           </p>
         </div>
@@ -339,8 +352,10 @@ export default function ReviewsSection() {
                     <div className="bg-[#1a1a1a] p-3 rounded-xl inline-block mb-4 group-hover:bg-[#B9935B]/20 transition-colors duration-300">
                         {benefit.icon}
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#B9935B] transition-colors" style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}>{benefit.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{benefit.description}</p>
+                    {/* Kanit for Benefit Title */}
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#B9935B] transition-colors" style={fonts.display}>{benefit.title}</h3>
+                    {/* Inter for Description */}
+                    <p className="text-gray-400 text-sm leading-relaxed" style={fonts.body}>{benefit.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -352,22 +367,23 @@ export default function ReviewsSection() {
              <div className="max-w-6xl mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 divide-y md:divide-y-0 md:divide-x divide-[#2a2a2a]">
                     <div className="text-center px-4">
-                        <div className="text-5xl md:text-6xl font-bold text-white mb-2 font-mono" style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}>
+                        <div className="text-5xl md:text-6xl font-bold text-white mb-2" style={fonts.display}>
                             <AnimatedNumber end={500} suffix="+" />
                         </div>
-                        <div className="text-[#B9935B] text-sm uppercase tracking-widest font-semibold">Happy Clients</div>
+                        {/* IBM Plex Mono for Stat Labels */}
+                        <div className="text-[#B9935B] text-sm uppercase tracking-widest font-semibold" style={fonts.mono}>Happy Clients</div>
                     </div>
                     <div className="text-center px-4">
-                        <div className="text-5xl md:text-6xl font-bold text-white mb-2 font-mono" style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}>
+                        <div className="text-5xl md:text-6xl font-bold text-white mb-2" style={fonts.display}>
                             <AnimatedNumber end={12.8} suffix="%" />
                         </div>
-                        <div className="text-[#B9935B] text-sm uppercase tracking-widest font-semibold">Avg Conv. Rate</div>
+                        <div className="text-[#B9935B] text-sm uppercase tracking-widest font-semibold" style={fonts.mono}>Avg Conv. Rate</div>
                     </div>
                     <div className="text-center px-4">
-                        <div className="text-5xl md:text-6xl font-bold text-white mb-2 font-mono" style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}>
+                        <div className="text-5xl md:text-6xl font-bold text-white mb-2" style={fonts.display}>
                             <AnimatedNumber end={7} suffix=" Days" />
                         </div>
-                        <div className="text-[#B9935B] text-sm uppercase tracking-widest font-semibold">To Launch</div>
+                        <div className="text-[#B9935B] text-sm uppercase tracking-widest font-semibold" style={fonts.mono}>To Launch</div>
                     </div>
                 </div>
              </div>
@@ -391,7 +407,7 @@ export default function ReviewsSection() {
                 <a 
                     href="#contact" // Changed to #contact for smooth scroll
                     className="relative flex items-center gap-4 bg-[#0a0a0a] text-white px-10 py-5 rounded-lg border border-[#B9935B] hover:bg-[#B9935B] hover:text-black transition-all duration-300 font-bold text-lg uppercase tracking-wider"
-                    style={{ fontFamily: "Druk Wide Cy Web Bold Regular" }}
+                    style={fonts.mono} // IBM Plex Mono for Button
                 >
                     <Zap className="w-5 h-5 fill-current" />
                     Ignite Your Conversions
@@ -401,14 +417,7 @@ export default function ReviewsSection() {
 
         {/* --- ANIMATED DECORATIVE ICONS --- */}
         <div className="animate-float-1 absolute right-[5%] top-[15%] hidden lg:block opacity-30 pointer-events-none">
-          <img
-            src="https://img.icons8.com/ios/100/ffffff/sea-urchin.png"
-            alt="Decoration"
-            width={80}
-            height={80}
-            className="invert brightness-0"
-            style={{ filter: 'invert(1) sepia(1) saturate(5) hue-rotate(5deg)' }}
-          />
+         
         </div>
 
         <div className="animate-float-2 absolute left-[5%] top-[50%] hidden lg:block opacity-20 pointer-events-none">

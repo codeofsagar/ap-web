@@ -7,16 +7,23 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 
 function AboutSection() {
-  // FIX: Changed HTMLSectionElement to HTMLElement to fix the TS error
-  const containerRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef(null);
+  const titleRef = useRef(null);
+  const contentRef = useRef(null);
+  const statsRef = useRef(null);
+  const imageRef = useRef(null);
 
-  const accentStyle: React.CSSProperties = {
+  // --- Font Configuration ---
+  const fonts = {
+    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers / Big Numbers
+    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Accents / Tech / Buttons
+    body: { fontFamily: "'Inter', sans-serif" }, // Paragraphs
+  };
+
+  // Accent style now uses IBM Plex Mono
+  const accentStyle = {
     color: "#B9935B",
-    fontFamily: "Druk Wide Cy Web Bold Regular",
+    ...fonts.mono,
     textTransform: "uppercase",
   };
 
@@ -74,7 +81,7 @@ function AboutSection() {
       stagger: {
         amount: 2,
         from: "random",
-      } as gsap.StaggerVars,
+      },
     });
   }, { scope: containerRef });
 
@@ -83,6 +90,7 @@ function AboutSection() {
       ref={containerRef}
       id="about"
       className="relative min-h-screen flex flex-col justify-center py-20 overflow-hidden text-white"
+      style={fonts.body} // Default to Inter
     >
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         
@@ -90,8 +98,10 @@ function AboutSection() {
         <div ref={titleRef} className="flex flex-col gap-2 mb-16 lg:mb-24">
           {/* Line 1 */}
           <div className="overflow-hidden">
-            <h2 className="text-3xl md:text-5xl lg:text-7xl font-light tracking-tight leading-[1.1]">
-              <span className="word-anim inline-block mr-4">You have the</span>
+            <h2 className="text-3xl md:text-5xl lg:text-7xl tracking-tight leading-[1.1]">
+              {/* Kanit for the lead-in */}
+              <span className="word-anim inline-block mr-4" style={fonts.display}>You have the</span>
+              {/* Mono for the emphasis */}
               <span className="word-anim inline-block" style={accentStyle}>
                 BEST ADS
               </span>
@@ -100,8 +110,8 @@ function AboutSection() {
           
           {/* Line 2 */}
           <div className="overflow-hidden">
-            <h2 className="text-3xl md:text-5xl lg:text-7xl font-light tracking-tight leading-[1.1]">
-              <span className="word-anim inline-block mr-4">in the world,</span>
+            <h2 className="text-3xl md:text-5xl lg:text-7xl tracking-tight leading-[1.1]">
+              <span className="word-anim inline-block mr-4" style={fonts.display}>in the world,</span>
               <span className="word-anim inline-block opacity-70 italic font-serif mr-4">but...</span>
             </h2>
           </div>
@@ -109,7 +119,7 @@ function AboutSection() {
           {/* Line 3 - BIG IMPACT */}
           <div className="overflow-hidden mt-2">
             <h2 className="text-4xl md:text-6xl lg:text-8xl leading-[1]">
-              <span className="word-anim inline-block mr-4">Your landing page</span>
+              <span className="word-anim inline-block mr-4" style={fonts.display}>Your landing page</span>
               <span className="word-anim inline-block border-b-4 border-[#B9935B]" style={accentStyle}>
                 SUCKS?
               </span>
@@ -122,7 +132,7 @@ function AboutSection() {
           
           {/* Column 1: Text Content (Span 5) */}
           <div ref={contentRef} className="lg:col-span-5 flex flex-col justify-between h-full gap-8">
-            <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light">
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light" style={fonts.body}>
               You are throwing <span style={accentStyle} className="text-sm md:text-base mx-1">MONEY</span> 
               into the <span style={accentStyle} className="text-sm md:text-base mx-1">FIRE</span>.
               <br /><br />
@@ -134,6 +144,7 @@ function AboutSection() {
                <Link
                 href="#conversion"
                 className="group relative inline-flex items-center gap-3 text-[#B9935B] text-sm tracking-[0.2em] uppercase font-bold"
+                style={fonts.mono}
               >
                 <span className="w-12 h-[1px] bg-[#B9935B] transition-all group-hover:w-20"></span>
                 Ignite Conversions
@@ -162,15 +173,17 @@ function AboutSection() {
         <div ref={statsRef} className="mt-24 pt-12 border-t border-[#B9935B]/40 grid grid-cols-1 md:grid-cols-2 gap-12">
           
           <div className="stat-item">
-            <div className="text-5xl md:text-7xl mb-2" style={accentStyle}>90%</div>
-            <p className="text-gray-400 text-sm tracking-wide uppercase">
+            {/* Kanit for the Big Number (Impact) */}
+            <div className="text-5xl md:text-7xl mb-2" style={{ ...fonts.display, color: "#B9935B" }}>90%</div>
+            {/* Mono for the Description (Technical) */}
+            <p className="text-gray-400 text-sm tracking-wide uppercase" style={fonts.mono}>
               of visitors bounce in <br />the first 3 seconds
             </p>
           </div>
 
           <div className="stat-item md:text-right">
-             <div className="text-5xl md:text-7xl mb-2" style={accentStyle}>3.2X</div>
-            <p className="text-gray-400 text-sm tracking-wide uppercase">
+             <div className="text-5xl md:text-7xl mb-2" style={{ ...fonts.display, color: "#B9935B" }}>3.2X</div>
+            <p className="text-gray-400 text-sm tracking-wide uppercase" style={fonts.mono}>
               better conversion than <br />industry averages
             </p>
           </div>

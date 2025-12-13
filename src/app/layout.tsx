@@ -23,10 +23,11 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en">
         <head>
-          <link
-            href="https://db.onlinewebfonts.com/c/0b5ecd0afcf95185925504cdca01f5e3?family=Druk+Wide+Cy+Web+Bold+Regular"
-            rel="stylesheet"
-          />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kanit:wght@700&display=swap"
+      rel="stylesheet" />
         </head>
         <ReactLenis root options={{ 
 

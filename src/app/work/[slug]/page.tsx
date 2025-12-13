@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { projects } from "@/data/projects";
 import { redirect } from "next/navigation";
-import { lcddot } from "@/fonts";
+// Removed lcddot import as we are using IBM Plex Mono now
 import { use } from "react";
 import { ArrowUpRight } from "lucide-react";
 import useInitialLoad from "@/contexts/initial-load-context";
@@ -26,6 +26,13 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
   if (!project) {
     redirect("/work");
   }
+
+  // --- Font Configuration ---
+  const fonts = {
+    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Big Headers
+    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Labels / Tags / Tech
+    body: { fontFamily: "'Inter', sans-serif" }, // Body Text
+  };
 
   return (
     <main className=" px-2 lg:px-4 pt-7 ">
@@ -49,6 +56,7 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
               ease: [0.16, 1, 0.3, 1],
             }}
             className="w-full text-neutral-100 text-center text-5xl md:text-[clamp(64px,8vw,180px)] font-bold uppercase leading-[0.85]"
+            style={fonts.display} // Kanit Bold
           >
             {project.title}
           </motion.h1>
@@ -67,6 +75,7 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   className="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-neutral-400 uppercase font-medium tracking-wider"
+                  style={fonts.mono} // IBM Plex Mono for Label
                 >
                   Year
                 </motion.p>
@@ -82,6 +91,7 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   className="text-[clamp(48px,3.5vw,96px)] text-neutral-100 font-semibold tracking-tight leading-[0.8]"
+                  style={fonts.display} // Kanit for the Number
                 >
                   {project.year}
                 </motion.p>
@@ -99,6 +109,7 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   className="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-neutral-400 uppercase font-medium tracking-wider"
+                  style={fonts.mono} // IBM Plex Mono for Label
                 >
                   Services
                 </motion.p>
@@ -117,7 +128,9 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
                         : 1.3 + index * 0.025,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    className={`${lcddot.className} text-[10px] lg:text-[clamp(12px,0.7vw,16px)] text-neutral-100 uppercase tracking-[1.1] bg-neutral-100/10 px-2 3xl:px-3 pt-2 pb-1.5 rounded-md whitespace-nowrap`}
+                    // Removed lcddot.className, applied mono font directly
+                    className="text-[10px] lg:text-[clamp(12px,0.7vw,16px)] text-neutral-100 uppercase tracking-[1.1] bg-neutral-100/10 px-2 3xl:px-3 pt-2 pb-1.5 rounded-md whitespace-nowrap"
+                    style={fonts.mono} 
                   >
                     {keyword}
                   </motion.li>
@@ -138,6 +151,7 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   className="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-neutral-400 uppercase font-medium tracking-wider"
+                  style={fonts.mono} // IBM Plex Mono for Label
                 >
                   Summary
                 </motion.p>
@@ -153,6 +167,7 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                   className="text-[clamp(16px,1.3vw,30px)] text-neutral-100 font-medium leading-[1.3]"
+                  style={fonts.body} // Inter for Body text
                 >
                   {project.summary}
                 </motion.p>
@@ -172,6 +187,7 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-neutral-400 uppercase font-medium tracking-wider flex items-center gap-1 hover:underline hover:text-neutral-100 transition-all duration-300"
+                    style={fonts.mono} // IBM Plex Mono for Link
                   >
                     Visit site <ArrowUpRight className="w-4 h-4" />
                   </motion.a>

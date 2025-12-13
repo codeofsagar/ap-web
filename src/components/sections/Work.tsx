@@ -11,8 +11,6 @@ import { useTransitionRouter } from "next-view-transitions";
 
 import { Zap } from "lucide-react";
 
-
-
 export default function Work() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, {
@@ -21,23 +19,32 @@ export default function Work() {
   });
   const router = useTransitionRouter();
 
+  // --- Font Configuration ---
+  const fonts = {
+    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers
+    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Buttons / Tech
+    body: { fontFamily: "'Inter', sans-serif" }, // Default
+  };
+
    const accentStyle: React.CSSProperties = {
-      color: "#B9935B",
-      fontFamily: "Druk Wide Cy Web Bold Regular",
-      textTransform: "uppercase",
-    };
+     color: "#B9935B",
+     ...fonts.display, // Kanit for the Header
+     textTransform: "uppercase",
+   };
 
   return (
-   
     <section
       ref={sectionRef}
       className="flex flex-col items-center py-24 px-4 lg:px-8 "
+      style={fonts.body}
     >
       <h2 className="flex justify-between w-full mb-6 lg:mb-8">
         <Copy>
+         {/* Kanit Bold */}
          <span style={accentStyle} className="md:text-6xl text-4xl ">Our Work</span>
         </Copy>
         <Copy delay={0.2}>
+         {/* Kanit Bold */}
           <span style={accentStyle} className="text-4xl md:text-6xl ">
             &apos;25
           </span>
@@ -83,13 +90,13 @@ export default function Work() {
           className="flex items-center gap-3 text-sm lg:text-xl uppercase px-8 py-4 transition-all border border-[#B9935B] font-bold"
           style={{ 
             backgroundColor: 'transparent',
-            color: '#B9935B'
+            color: '#B9935B',
+            ...fonts.mono // IBM Plex Mono for Button
           }}
-         onClick={(e) => {
-                      e.preventDefault();
-                     
-                      router.push("/work", { onTransitionReady: pageTransition });
-                    }} 
+          onClick={(e) => {
+              e.preventDefault();
+              router.push("/work", { onTransitionReady: pageTransition });
+          }} 
         >
           <motion.div
             animate={{ rotate: [0, 15, 0] }}
@@ -97,7 +104,7 @@ export default function Work() {
           >
             <Zap className="w-5 h-5" fill="#B9935B" />
           </motion.div>
-          See All {/* Removed Link component */}
+          See All
         </motion.button>
       </div>
 

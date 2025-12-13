@@ -13,10 +13,18 @@ function HomeContact() {
 
   const yBg = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
+  // --- Font Configuration ---
+  const fonts = {
+    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers
+    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Badges / Specs
+    body: { fontFamily: "'Inter', sans-serif" }, // Body text
+  };
+
   return (
     <section
       ref={containerRef}
-      className="relative w-full py-32 lg:py-48  overflow-hidden flex items-center justify-center"
+      className="relative w-full py-32 lg:py-48 overflow-hidden flex items-center justify-center"
+      style={fonts.body}
     >
       {/* --- BACKGROUND ELEMENTS --- */}
       
@@ -31,7 +39,7 @@ function HomeContact() {
       {/* Floating Gold Glows */}
       <motion.div 
         style={{ y: yBg }}
-        className="absolute top-0 right-0 w-[500px] h-[500px]  blur-[120px] rounded-full pointer-events-none"
+        className="absolute top-0 right-0 w-[500px] h-[500px] blur-[120px] rounded-full pointer-events-none"
       />
       <motion.div 
         style={{ y: yBg }}
@@ -49,7 +57,10 @@ function HomeContact() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B9935B]/10 border border-[#B9935B]/20 backdrop-blur-md mb-8"
         >
             <span className="w-2 h-2 rounded-full bg-[#B9935B] animate-pulse"></span>
-            <span className="text-xs font-bold uppercase tracking-widest text-[#B9935B]">Limited Availability for Q4</span>
+            {/* IBM Plex Mono for Technical Badge */}
+            <span className="text-xs font-bold uppercase tracking-widest text-[#B9935B]" style={fonts.mono}>
+              Limited Availability for Q4
+            </span>
         </motion.div>
 
         {/* Headline */}
@@ -59,7 +70,7 @@ function HomeContact() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-6xl lg:text-8xl leading-none text-white uppercase mb-8"
-            style={{ fontFamily: 'Druk Wide Cy Web Bold Regular' }}
+            style={fonts.display} // Kanit Bold
         >
             Stop Losing <br />
             <span className="text-transparent" style={{ WebkitTextStroke: '1px #B9935B' }}>
@@ -74,6 +85,7 @@ function HomeContact() {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 font-light leading-relaxed"
+            style={fonts.body} // Inter
         >
             Your traffic is expensive. Your landing page shouldn&apos;t be the bottleneck. 
             Book a free 30-minute audit and we&apos;ll show you exactly where you&apos;re leaving money on the table.
@@ -86,6 +98,7 @@ function HomeContact() {
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
             className="flex flex-wrap justify-center gap-6 mb-12 text-sm text-gray-400"
+            style={fonts.mono} // IBM Plex Mono for Specs
         >
             <div className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-[#B9935B]" />
@@ -115,7 +128,8 @@ function HomeContact() {
                 className="relative flex items-center gap-4 bg-[#B9935B] text-black px-10 py-5 rounded-lg hover:bg-[#cba264] transition-all duration-300 transform group-hover:-translate-y-1 cursor-pointer"
             >
                 <Calendar className="w-5 h-5" />
-                <span className="font-bold text-lg uppercase tracking-wider" style={{ fontFamily: 'Druk Wide Cy Web Bold Regular' }}>
+                {/* Kanit Bold for Button Text */}
+                <span className="font-bold text-lg uppercase tracking-wider" style={fonts.display}>
                     Book Your Strategy Call
                 </span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -147,12 +161,12 @@ function HomeContact() {
                 >
                     {/* Header */}
                     <div className="absolute top-0 left-0 right-0 h-12 bg-[#1a1a1a] border-b border-[#2a2a2a] flex items-center justify-end px-4 z-20">
-                         <button 
+                          <button 
                             onClick={() => setShowCalendar(false)}
                             className="text-gray-400 hover:text-white transition-colors p-1"
-                         >
-                            <X size={20} />
-                         </button>
+                          >
+                             <X size={20} />
+                          </button>
                     </div>
 
                     {/* Calendly Iframe with Dark Mode Params */}

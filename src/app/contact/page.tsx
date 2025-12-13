@@ -5,15 +5,20 @@ import { Send, Mail, MapPin, Phone, Clock } from 'lucide-react';
 
 function Contact() {
   const containerRef = useRef(null);
-  
 
- 
+  // --- Font Configuration ---
+  const fonts = {
+    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers / Impact
+    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Labels / Data / Specs
+    body: { fontFamily: "'Inter', sans-serif" }, // Descriptions
+  };
 
   return (
     <section
       id="contact"
       ref={containerRef}
       className="min-h-screen text-white flex flex-col justify-center px-4 py-32 lg:px-12 lg:py-40 relative overflow-hidden "
+      style={fonts.body}
     >
       {/* --- CUSTOM STYLES FOR ANIMATIONS --- */}
       <style>{`
@@ -32,10 +37,10 @@ function Contact() {
 
       {/* Decorative Background Grid */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
-             style={{ 
-                 backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
-                 backgroundSize: '60px 60px' 
-             }}>
+           style={{ 
+               backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
+               backgroundSize: '60px 60px' 
+           }}>
       </div>
 
       {/* --- SECTION HEADER --- */}
@@ -47,9 +52,10 @@ function Contact() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="overflow-hidden mb-8"
         >
+          {/* Kanit for Main Headline */}
           <h2 
             className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight uppercase tracking-tight"
-            style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: '#B9935B' }}
+            style={{ ...fonts.display, color: '#B9935B' }}
           >
             Ready to convert
             <br />
@@ -57,12 +63,14 @@ function Contact() {
           </h2>
         </motion.div>
         
+        {/* Inter for Subtext */}
         <motion.p 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide"
+            style={fonts.body}
         >
             Book a time below for your 30-minute landing page consultation.
         </motion.p>
@@ -104,11 +112,13 @@ function Contact() {
                 <div className="relative p-10 lg:p-12 rounded-3xl bg-[#111]/50 backdrop-blur-sm border border-[#2a2a2a]">
                     <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#B9935B]/20 blur-3xl rounded-full"></div>
                     
-                    <h3 className="text-3xl lg:text-5xl uppercase mb-8 leading-none" style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: '#B9935B' }}>
+                    {/* Kanit for Section Title */}
+                    <h3 className="text-3xl lg:text-5xl uppercase mb-8 leading-none" style={{ ...fonts.display, color: '#B9935B' }}>
                         Let&#39;s Talk <br /> <span className="text-white">Growth</span>
                     </h3>
                     
-                    <p className="text-xl text-gray-400 mb-12 font-light leading-relaxed">
+                    {/* Inter for Body */}
+                    <p className="text-xl text-gray-400 mb-12 font-light leading-relaxed" style={fonts.body}>
                         We&#39;ll show you how our landing pages can transform your conversion rates within days. 
                         Can&apos;t find a time that works? Reach out directly.
                     </p>
@@ -120,8 +130,10 @@ function Contact() {
                                 <Mail size={24} className="text-[#B9935B] group-hover:text-black transition-colors" />
                             </div>
                             <div>
-                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold">Email Us</h4>
-                                <span className="text-2xl text-white group-hover:text-[#B9935B] transition-colors font-light">
+                                {/* IBM Plex Mono for Label */}
+                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold" style={fonts.mono}>Email Us</h4>
+                                {/* IBM Plex Mono for Data */}
+                                <span className="text-xl md:text-2xl text-white group-hover:text-[#B9935B] transition-colors font-light" style={fonts.mono}>
                                     info@apagency.ca
                                 </span>
                             </div>
@@ -133,8 +145,8 @@ function Contact() {
                                 <Phone size={24} className="text-[#B9935B] group-hover:text-black transition-colors" />
                             </div>
                             <div>
-                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold">Call Us</h4>
-                                <p className="text-2xl text-white font-light"> (647) 424-0504</p>
+                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold" style={fonts.mono}>Call Us</h4>
+                                <p className="text-xl md:text-2xl text-white font-light" style={fonts.mono}> (647) 424-0504</p>
                             </div>
                         </div>
                         
@@ -144,8 +156,8 @@ function Contact() {
                                 <MapPin size={24} className="text-[#B9935B] group-hover:text-black transition-colors" />
                             </div>
                             <div>
-                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold">HQ Location</h4>
-                                <p className="text-lg text-white/80 font-light leading-relaxed max-w-xs">10330 Yonge St, Richmond Hill,<br/> ON L4C 5N1, Canada</p>
+                                <h4 className="text-sm uppercase tracking-widest text-[#B9935B] mb-2 font-bold" style={fonts.mono}>HQ Location</h4>
+                                <p className="text-lg text-white/80 font-light leading-relaxed max-w-xs" style={fonts.mono}>10330 Yonge St, Richmond Hill,<br/> ON L4C 5N1, Canada</p>
                             </div>
                         </div>
                     </div>
@@ -156,10 +168,11 @@ function Contact() {
                     <div className="absolute top-0 right-0 p-8 opacity-10">
                         <Clock size={100} className="text-[#B9935B]" />
                     </div>
-                    <h4 className="text-xl uppercase mb-6 flex items-center gap-3 relative z-10" style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: 'white' }}>
+                    {/* Kanit for Header */}
+                    <h4 className="text-xl uppercase mb-6 flex items-center gap-3 relative z-10" style={{ ...fonts.display, color: 'white' }}>
                         Working Hours
                     </h4>
-                    <div className="space-y-4 relative z-10">
+                    <div className="space-y-4 relative z-10" style={fonts.mono}>
                         <div className="flex justify-between items-center border-b border-white/10 pb-4">
                             <span className="text-gray-400">Monday - Friday</span>
                             <span className="text-[#B9935B] font-bold tracking-widest">09:00 - 19:00</span>
@@ -187,19 +200,16 @@ function Contact() {
             <Send size={24} className="text-[#000]" />
           </div>
           <div className="text-left">
-              <p className="text-xl lg:text-2xl text-white font-light">
+              <p className="text-xl lg:text-2xl text-white font-light" style={fonts.body}>
                 We respond to all inquiries within
               </p>
-              <p className="text-xl lg:text-3xl mt-1 uppercase" style={{ fontFamily: 'Druk Wide Cy Web Bold Regular', color: '#B9935B' }}>
+              {/* Kanit for the Promise */}
+              <p className="text-xl lg:text-3xl mt-1 uppercase" style={{ ...fonts.display, color: '#B9935B' }}>
                   24 business hours
               </p>
           </div>
         </div>
       </motion.div>
-
-     
-
-      
 
       <motion.div className="animate-float-3 absolute left-[15%] bottom-[10%] hidden xl:block pointer-events-none select-none opacity-10">
         <img
