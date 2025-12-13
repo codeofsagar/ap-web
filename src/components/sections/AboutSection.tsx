@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useRef } from "react";
+// 1. Added CSSProperties to the import here
+import React, { useRef, CSSProperties } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
@@ -20,8 +21,8 @@ function AboutSection() {
     body: { fontFamily: "'Inter', sans-serif" }, // Paragraphs
   };
 
-  // Accent style now uses IBM Plex Mono
-  const accentStyle = {
+  // 2. FIXED: Explicitly typed this as CSSProperties to fix the textTransform error
+  const accentStyle: CSSProperties = {
     color: "#B9935B",
     ...fonts.mono,
     textTransform: "uppercase",
@@ -102,7 +103,8 @@ function AboutSection() {
               {/* Kanit for the lead-in */}
               <span className="word-anim inline-block mr-4" style={fonts.display}>You have the</span>
               {/* Mono for the emphasis */}
-              <span className="word-anim inline-block" style={accentStyle}>
+              <span className="word-anim inline-block" 
+              style={accentStyle}>
                 BEST ADS
               </span>
             </h2>
