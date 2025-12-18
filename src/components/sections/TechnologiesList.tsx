@@ -8,6 +8,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// 1. Centralized Data Source
+const TECH_DATA = [
+  { name: "React", href: "https://reactjs.org", src: "/images/svg/react-logo.svg", width: 90 },
+  { name: "Next.js", href: "https://nextjs.org", src: "/images/svg/nextjs-logotype-light-background.svg", width: 150 },
+  { name: "TypeScript", href: "https://www.typescriptlang.org", src: "/images/svg/typescript-logo.svg", width: 70 },
+  { name: "GSAP", href: "https://gsap.com/", src: "/images/svg/gsap-black.svg", width: 80 },
+  { name: "Motion", href: "https://motion.dev/", src: "/images/svg/motion.svg", width: 80 },
+  { name: "Tailwind", href: "https://tailwindcss.com/", src: "/images/svg/tailwindcss-logo.svg", width: 70 },
+  { name: "Contentful", href: "https://www.contentful.com/", src: "/images/svg/contentful-logo.svg", width: 50 },
+  { name: "Supabase", href: "https://supabase.com/", src: "/images/svg/supabase-logo.svg", width: 50 },
+  { name: "Vercel", href: "https://vercel.com/", src: "/images/svg/vercel-logotype-light.svg", width: 90 },
+  { name: "Figma", href: "https://www.figma.com/", src: "/images/svg/figma-logo.svg", width: 60 },
+];
+
 const fonts = {
   display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 },
   mono: { fontFamily: "'IBM Plex Mono', monospace" },
@@ -24,8 +38,6 @@ export default function TechnologiesLit() {
     const highlight = highlightRef.current;
 
     if (!container || !highlight) return;
-
-    const firstItem = container.querySelector(".grid-item:first-child") as HTMLElement;
 
     const moveToElement = (element: HTMLElement) => {
       if (element) {
@@ -53,14 +65,15 @@ export default function TechnologiesLit() {
     };
 
     const moveHighlight = (e: MouseEvent) => {
-      const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
-      const gridItem = hoveredElement?.closest(".grid-item") as HTMLElement;
+      const target = e.target as HTMLElement;
+      const gridItem = target.closest(".grid-item") as HTMLElement;
 
       if (gridItem) {
         moveToElement(gridItem);
       }
     };
 
+    const firstItem = container.querySelector(".grid-item") as HTMLElement;
     if (firstItem) moveToElement(firstItem);
 
     container.addEventListener("mousemove", moveHighlight);
@@ -76,43 +89,47 @@ export default function TechnologiesLit() {
       </h4>
 
       <div ref={containerRef} className="relative border-t border-l border-neutral-300">
-        {/* Highlight Box - Now Golden with Tech Name */}
+        {/* Highlight Box */}
         <div
           ref={highlightRef}
           className="highlight hidden sm:flex absolute top-0 left-0 bg-[#B9935B] pointer-events-none transition-all duration-300 z-0 items-end justify-center pb-4"
         >
           <span 
-            className="text-white text-xs md:text-sm uppercase tracking-widest animate-in fade-in duration-500" 
+            className="text-white text-xs md:text-sm uppercase tracking-widest" 
             style={fonts.mono}
           >
             {activeTech}
           </span>
         </div>
 
-        {/* Desktop Grid */}
+        {/* Desktop Grid Layout */}
         <div className="hidden lg:grid grid-rows-2 relative z-10">
+          {/* Row 1: Top 3 Items */}
           <div className="grid grid-cols-3 border-b border-neutral-300 h-[clamp(200px,20vw,400px)]">
-            <TechLink name="React" href="https://reactjs.org" src="/images/svg/react-logo.svg" width={90} />
-            <TechLink name="Next.js" href="https://nextjs.org" src="/images/svg/nextjs-logotype-light-background.svg" width={150} />
-            <TechLink name="TypeScript" href="https://www.typescriptlang.org" src="/images/svg/typescript-logo.svg" width={70} noBorder />
+            {TECH_DATA.slice(0, 3).map((tech, i) => (
+              <TechLink key={tech.name} {...tech} noBorder={i === 2} />
+            ))}
           </div>
 
+          {/* Row 2: Remaining 7 Items */}
           <div className="grid grid-cols-7 h-[clamp(200px,15vw,400px)]">
-            <TechLink name="GSAP" href="https://gsap.com/" src="/images/svg/gsap-black.svg" width={80} />
-            <TechLink name="Motion" href="https://motion.dev/" src="/images/svg/motion.svg" width={80} />
-            <TechLink name="Tailwind" href="https://tailwindcss.com/" src="/images/svg/tailwindcss-logo.svg" width={70} />
-            <TechLink name="Contentful" href="https://www.contentful.com/" src="/images/svg/contentful-logo.svg" width={50} />
-            <TechLink name="Supabase" href="https://supabase.com/" src="/images/svg/supabase-logo.svg" width={50} />
-            <TechLink name="Vercel" href="https://vercel.com/" src="/images/svg/vercel-logotype-light.svg" width={90} />
-            <TechLink name="Figma" href="https://www.figma.com/" src="/images/svg/figma-logo.svg" width={60} noBorder />
+            {TECH_DATA.slice(3).map((tech, i) => (
+              <TechLink key={tech.name} {...tech} noBorder={i === 6} />
+            ))}
           </div>
         </div>
 
-        {/* Mobile Grid */}
+        {/* Mobile Grid Layout (2 columns, shows all items) */}
         <div className="grid grid-cols-2 lg:hidden relative z-10">
-          <TechLink name="React" href="https://reactjs.org" src="/images/svg/react-logo.svg" width={70} mobile />
-          <TechLink name="Next.js" href="https://nextjs.org" src="/images/svg/nextjs-logotype-light-background.svg" width={100} mobile noBorder />
-          {/* ... Add other TechLinks for mobile as needed ... */}
+          {TECH_DATA.map((tech, i) => (
+            <TechLink 
+              key={tech.name} 
+              {...tech} 
+              mobile 
+              // noBorder if it's the 2nd item in a row (even index in a 0-based list)
+              noBorder={i % 2 !== 0} 
+            />
+          ))}
         </div>
       </div>
     </section>
@@ -124,8 +141,8 @@ interface TechLinkProps {
   href: string;
   src: string;
   width: number;
-  noBorder?: boolean; // Optional boolean
-  mobile?: boolean;   // Optional boolean
+  noBorder?: boolean;
+  mobile?: boolean;
 }
 
 function TechLink({ name, href, src, width, noBorder, mobile }: TechLinkProps) {
@@ -133,19 +150,21 @@ function TechLink({ name, href, src, width, noBorder, mobile }: TechLinkProps) {
     <a
       href={href}
       target="_blank"
-      rel="noopener noreferrer" // Added for security when using target="_blank"
+      rel="noopener noreferrer"
       data-name={name}
-      className={`grid-item flex items-center justify-center group cursor-pointer border-b lg:border-b-0 ${
+      className={`grid-item flex items-center justify-center group cursor-pointer border-b ${
         !noBorder ? "border-r" : ""
-      } border-neutral-300 ${mobile ? "h-[200px]" : "h-full"}`}
+      } border-neutral-300 ${mobile ? "h-[160px]" : "h-full lg:border-b-0"}`}
     >
-      <Image
-        src={src}
-        alt={name}
-        width={width}
-        height={width}
-        className="z-10 transition-all duration-300 mix-blend-multiply"
-      />
+      <div className="relative flex items-center justify-center w-full h-full p-6">
+        <Image
+          src={src}
+          alt={name}
+          width={width}
+          height={width}
+          className="z-10 transition-all duration-300 mix-blend-multiply object-contain"
+        />
+      </div>
     </a>
   );
 }
@@ -176,9 +195,9 @@ function LetterScroll() {
   ));
 
   return (
-    <ul ref={containerRef} className="letter-scroll flex flex-col justify-center items-center h-[500px] lg:h-[800px] py-24" style={fonts.display}>
-      <li className="text-[clamp(48px,14vw,250px)] tracking-tight leading-[0.85] overflow-hidden flex">{renderWord("MODERN")}</li>
-      <li className="text-[clamp(48px,14vw,250px)] tracking-tight leading-[0.85] overflow-hidden flex">{renderWord("TECHSTACK")}</li>
+    <ul ref={containerRef} className="letter-scroll flex flex-col justify-center items-center h-[300px] lg:h-[600px] py-12" style={fonts.display}>
+      <li className="text-[clamp(40px,12vw,200px)] tracking-tight leading-[0.85] overflow-hidden flex">{renderWord("MODERN")}</li>
+      <li className="text-[clamp(40px,12vw,200px)] tracking-tight leading-[0.85] overflow-hidden flex">{renderWord("TECHSTACK")}</li>
     </ul>
   );
 }
