@@ -11,7 +11,7 @@ import { metadata } from "./metadata";
 import FooterWrapper from "@/components/layout/FooterWrapper";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import { InitialLoadProvider } from "@/contexts/initial-load-context";
-import { AuroraBackground } from "@/components/ui/aura";
+
 export { metadata };
 
 export default function RootLayout({
