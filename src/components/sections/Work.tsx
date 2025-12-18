@@ -4,12 +4,13 @@ import { motion, useInView } from "motion/react";
 import { projects } from "@/data/projects";
 import ProjectCard from "@/components/ui/ProjectCard";
 import Copy from "../layout/Copy";
-import { pageTransition } from "@/constants/pageTransition";
+
+import Link from "next/link";
 
 import { useRef } from "react";
-import { useTransitionRouter } from "next-view-transitions";
 
-import { Zap } from "lucide-react";
+
+
 
 export default function Work() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -17,7 +18,7 @@ export default function Work() {
     once: true,
     margin: "0px 0px -55% 0px",
   });
-  const router = useTransitionRouter();
+ 
 
   // --- Font Configuration ---
   const fonts = {
@@ -35,20 +36,15 @@ export default function Work() {
   return (
     <section
       ref={sectionRef}
-      className="flex flex-col items-center py-24 px-4 lg:px-8 "
+      className="flex flex-col items-center py-24 px-4 lg:px-8 bg-[#1a1919] "
       style={fonts.body}
     >
       <h2 className="flex justify-between w-full mb-6 lg:mb-8">
         <Copy>
          {/* Kanit Bold */}
-         <span style={accentStyle} className="md:text-6xl text-4xl ">Our Work</span>
+         <span style={accentStyle} className="md:text-9xl text-6xl ">Our Work</span>
         </Copy>
-        <Copy delay={0.2}>
-         {/* Kanit Bold */}
-          <span style={accentStyle} className="text-4xl md:text-6xl ">
-            &apos;25
-          </span>
-        </Copy>
+       
       </h2>
 
       <ul className="flex flex-col lg:flex-row gap-3 lg:gap-4 w-full mb-8 lg:mb-16">
@@ -80,32 +76,16 @@ export default function Work() {
       </ul>
 
        <div className="flex justify-center relative top-12">
-        <motion.button
-          whileHover={{ 
-            scale: 1.05,
-            backgroundColor: "#B9935B",
-            color: "#0a0a0a"
-          }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-3 text-sm lg:text-xl uppercase px-8 py-4 transition-all border border-[#B9935B] font-bold"
-          style={{ 
-            backgroundColor: 'transparent',
-            color: '#B9935B',
-            ...fonts.mono // IBM Plex Mono for Button
-          }}
-          onClick={(e) => {
-              e.preventDefault();
-              router.push("/work", { onTransitionReady: pageTransition });
-          }} 
-        >
-          <motion.div
-            animate={{ rotate: [0, 15, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          >
-            <Zap className="w-5 h-5" fill="#B9935B" />
-          </motion.div>
-          See All
-        </motion.button>
+        <Link 
+              href="/work" 
+              className="group relative inline-flex items-center justify-center px-12 py-6 bg-[#B9935B] text-black overflow-hidden font-bold uppercase tracking-wider text-sm transition-all hover:bg-white hover:text-black"
+              style={fonts.mono}
+            >
+              <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-96 group-hover:h-96 opacity-10"></span>
+              <span className="relative flex items-center gap-2">
+                SEE All WORK
+              </span>
+            </Link>
       </div>
 
     </section>

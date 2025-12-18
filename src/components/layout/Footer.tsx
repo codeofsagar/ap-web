@@ -1,193 +1,220 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { IconArrowUpRight } from "@tabler/icons-react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useTransitionRouter } from "next-view-transitions";
 import { pageTransition } from "@/constants/pageTransition";
+import { ArrowUp } from "lucide-react";
 
-import { ArrowUpRight, ArrowUp } from "lucide-react";
+const COLORS = {
+  gold: "#B9935B",
+  black: "#050505",
+  white: "#FFFBF6"
+};
 
-export default function Footer() {
+function Footer() {
+  const footerRef = useRef<HTMLDivElement>(null);
+  const currentYear = new Date().getFullYear();
   const pathname = usePathname();
   const router = useTransitionRouter();
-  const currentYear = new Date().getFullYear();
 
-  // --- Font Configuration ---
-  const fonts = {
-    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers
-    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Nav / Specs / Tech
-    body: { fontFamily: "'Inter', sans-serif" }, // Legal / Small text
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Parallax effect for the massive text at the bottom
+    gsap.fromTo(
+      ".footer-brand-text",
+      { y: -40 },
+      {
+        y: 0,
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: 1.5,
+        },
+      }
+    );
+  }, { scope: footerRef });
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) return; // Let smooth scroll handle anchors
+    e.preventDefault();
+    if (pathname === href) return;
+    router.push(href, { onTransitionReady: pageTransition });
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    if (pathname === href) return;
-    router.push(href, { onTransitionReady: pageTransition });
-  };
-
   return (
-    <footer className="w-full bg-[#050505] text-white pt-20 md:pt-32 pb-8 overflow-hidden relative border-t border-[#1a1a1a]">
-      
-      {/* Background Texture */}
-      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
-           style={{ 
-               backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
-               backgroundSize: '40px 40px' 
-           }}>
-      </div>
-
-      <div className="max-w-[95%] mx-auto relative z-10">
-        
-        {/* --- TOP SECTION: CTA --- */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 md:mb-32 gap-10">
-          <div className="flex flex-col gap-2">
-            <span className="text-[#B9935B] uppercase tracking-widest text-xs md:text-sm mb-2" style={fonts.mono}>
+    <footer 
+      ref={footerRef}
+      className="bg-[#050505] text-[#FFFBF6] pt-16 md:pt-24 overflow-hidden relative border-t border-[#1a1a1a]"
+      style={{ fontFamily: '"Inter", sans-serif' }}
+    >
+      {/* 1. Main Call to Action Area (Original Header Logic) */}
+      <div className="container max-w-8xl mx-auto px-4 md:px-6 lg:px-12 mb-12 md:mb-20 relative z-10">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 lg:gap-10">
+          <div>
+            <p 
+              className="text-xs md:text-sm uppercase tracking-[0.3em] mb-4"
+              style={{ 
+                fontFamily: '"IBM Plex Mono", monospace', 
+                color: COLORS.gold 
+              }}
+            >
               [ Start a Project ]
-            </span>
-            <h2 className="text-5xl md:text-7xl lg:text-8xl leading-[0.9] text-white" style={fonts.display}>
-              READY TO <br />
-              <span className="text-[#B9935B]">SCALE UP?</span>
+            </p>
+            <h2 
+              className="text-[clamp(3rem,8vw,7.5rem)] leading-[0.85] uppercase"
+              style={{ 
+                fontFamily: "'Kanit', sans-serif",
+                fontWeight: 900 
+              }}
+            >
+              Ready to <br />
+              <span style={{ color: COLORS.gold }}>Scale Up?</span>
             </h2>
           </div>
-
-          <a 
-            href="mailto:info@apagency.ca"
-            className="group relative flex items-center justify-center w-full md:w-auto px-8 py-12 md:px-16 md:py-16 rounded-full border border-[#333] hover:border-[#B9935B] hover:bg-[#B9935B] transition-all duration-500"
-          >
-            <span className="text-xl md:text-3xl group-hover:text-black transition-colors duration-300" style={fonts.mono}>
-              info@apagency.ca
-            </span>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 group-hover:translate-x-0">
-               <ArrowUpRight className="w-6 h-6 text-black" />
-            </div>
-          </a>
-        </div>
-
-        {/* --- MIDDLE SECTION: GRID LINKS --- */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 border-t border-[#1a1a1a] pt-12 md:pt-16 mb-20">
           
-          {/* Col 1: Address */}
-          <div className="md:col-span-3 flex flex-col gap-6">
-            <h4 className="text-xs uppercase text-gray-500 tracking-widest" style={fonts.mono}>HEADQUARTERS</h4>
-            <div className="flex flex-col gap-1 text-sm md:text-base text-gray-300" style={fonts.mono}>
-              <p>10330 Yonge St,</p>
-              <p>Richmond Hill, ON</p>
-              <p>L4C 5N1, Canada</p>
-            </div>
-            <div className="flex flex-col gap-1 text-sm md:text-base text-gray-300 mt-4" style={fonts.mono}>
-              <a href="tel:+16474240504" className="hover:text-[#B9935B] transition-colors">(647) 424-0504</a>
-            </div>
+          <div className="group relative w-full lg:w-auto">
+             <a 
+                href="mailto:info@apagency.ca"
+                className="flex items-center gap-4 text-xl md:text-3xl lg:text-4xl uppercase border-b border-[#B9935B]/50 pb-4 group-hover:border-[#B9935B] transition-all duration-300"
+                style={{ 
+                  fontFamily: "'Kanit', sans-serif",
+                  fontWeight: 900 
+                }}
+             >
+                info@apagency.ca
+                <IconArrowUpRight 
+                    className="w-8 h-8 md:w-12 md:h-12 transition-transform duration-500 group-hover:-translate-y-2 group-hover:translate-x-2 text-[#B9935B]" 
+                />
+             </a>
           </div>
+        </div>
+      </div>
 
-          {/* Col 2: Sitemap */}
-          <div className="md:col-span-3 flex flex-col gap-6">
-            <h4 className="text-xs uppercase text-gray-500 tracking-widest" style={fonts.mono}>SITEMAP</h4>
-            <ul className="flex flex-col gap-3">
-              {[
-                { name: "Home", href: "/" },
-                { name: "Our Work", href: "/work" },
-                { name: "Services", href: "/#services" }, // Assuming services is on home or separate
-                { name: "Contact", href: "/contact" },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link 
-                    href={link.href}
-                    onClick={(e) => handleLinkClick(e, link.href)}
-                    className="group flex items-center gap-2 text-lg text-white hover:text-[#B9935B] transition-colors"
-                    style={fonts.mono}
-                  >
-                    <span className="w-1.5 h-1.5 bg-[#333] group-hover:bg-[#B9935B] transition-colors rounded-full"></span>
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 3: Services List */}
-          <div className="md:col-span-3 flex flex-col gap-6">
-            <h4 className="text-xs uppercase text-gray-500 tracking-widest" style={fonts.mono}> CAPABILITIES</h4>
-            <ul className="flex flex-col gap-3">
-              {[
-                "Personal Branding",
-                "UX / Development",
-                "Digital Design",
-                "Video Production",
-                "Strategy & Ads"
-              ].map((item) => (
-                <li key={item} className="text-gray-400 text-sm md:text-base" style={fonts.mono}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 4: Socials */}
-          <div className="md:col-span-3 flex flex-col gap-6">
-            <h4 className="text-xs uppercase text-gray-500 tracking-widest" style={fonts.mono}> SOCIALS</h4>
-            <ul className="flex flex-col gap-3">
-              <li>
-                <a 
-                  href="https://www.instagram.com/ap.digitalagency/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2 text-white hover:text-[#B9935B] transition-colors"
-                  style={fonts.mono}
-                >
-                  Instagram <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100" />
-                </a>
-              </li>
-              {/* Add other socials here if needed */}
-            </ul>
+      {/* 2. Architectural Grid Info (Merging Content from Original Footer) */}
+      <div className="border-t border-[#B9935B]/30 relative z-10 bg-[#050505]/80 backdrop-blur-sm">
+        <div className="container mx-auto px-4 md:px-6 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#B9935B]/20">
             
-            <button 
-              onClick={scrollToTop}
-              className="mt-auto self-start group flex items-center gap-2 text-xs uppercase tracking-widest text-[#B9935B] hover:text-white transition-colors"
-              style={fonts.mono}
-            >
-              Back to Top <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
-            </button>
-          </div>
-
-        </div>
-
-        {/* --- BOTTOM SECTION: MASSIVE SIGNATURE --- */}
-        <div className="relative border-t border-[#1a1a1a] pt-8 flex flex-col md:flex-row justify-between items-end md:items-center">
-          
-          {/* Legal */}
-          <div className="flex flex-col md:flex-row gap-4 md:gap-8 mb-4 md:mb-0 order-2 md:order-1">
-            <p className="text-neutral-600 text-xs" style={fonts.body}>
-              &copy; {currentYear} AP Agency Inc.
-            </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-neutral-600 hover:text-neutral-400 text-xs transition-colors" style={fonts.body}>Privacy Policy</a>
-              <a href="#" className="text-neutral-600 hover:text-neutral-400 text-xs transition-colors" style={fonts.body}>Terms & Conditions</a>
+            {/* Col 1: Headquarters & Logo */}
+            <div className="py-12 lg:pr-12">
+                <div className="mb-8">
+                  <div className="relative w-32 h-32 md:w-40 md:h-40 ">
+                    <Image
+                      src="/images/foot.png"
+                      alt="AP Agency Logo"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                <h4 className="text-[10px] uppercase text-gray-500 tracking-widest mb-4 font-mono">HEADQUARTERS</h4>
+                <div className="text-gray-400 leading-relaxed text-sm font-light font-mono space-y-1">
+                    <p>10330 Yonge St, Richmond Hill</p>
+                    <p>ON L4C 5N1, Canada</p>
+                    <a href="tel:6474240504" className="block mt-4 text-[#B9935B] hover:text-white transition-colors">(647) 424-0504</a>
+                </div>
             </div>
+
+            {/* Col 2: Sitemap */}
+            <div className="py-12 md:px-12">
+                <h4 className="text-[10px] uppercase mb-8 tracking-widest font-mono text-[#B9935B]">Sitemap</h4>
+                <ul className="space-y-4">
+                    {[
+                        { name: "Home", href: "/" },
+                        { name: "Our Work", href: "/work" },
+                        { name: "Lab", href: "/lab" },
+                        { name: "Contact", href: "/contact" }
+                    ].map((item) => (
+                        <li key={item.name}>
+                            <Link 
+                                href={item.href} 
+                                onClick={(e) => handleLinkClick(e, item.href)}
+                                className="text-base md:text-lg hover:text-[#B9935B] transition-colors inline-block font-semibold uppercase tracking-tight"
+                            >
+                                {item.name}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* Col 3: Capabilities */}
+            <div className="py-12 md:px-12">
+                <h4 className="text-[10px] uppercase mb-8 tracking-widest font-mono text-[#B9935B]">Capabilities</h4>
+                <ul className="space-y-4">
+                    {[
+                      "Personal Branding", "UX / Development", "Digital Design", 
+                      "Video Production", "Strategy & Ads"
+                    ].map((item) => (
+                        <li key={item} className="text-sm md:text-base text-gray-400 font-mono">
+                           {item}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* Col 4: Socials & Back to Top */}
+            <div className="py-12 md:pl-12 flex flex-col justify-between">
+                <div>
+                    <h4 className="text-[10px] uppercase mb-8 tracking-widest font-mono text-[#B9935B]">Socials</h4>
+                    <a 
+                      href="https://www.instagram.com/ap.digitalagency/" 
+                      target="_blank" 
+                      className="group flex items-center gap-2 text-base md:text-lg hover:text-[#B9935B] transition-colors font-semibold uppercase"
+                    >
+                        Instagram <IconArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                    </a>
+                </div>
+                
+                <div className="mt-12">
+                    <button 
+                      onClick={scrollToTop}
+                      className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-[#B9935B] hover:text-white transition-colors font-mono"
+                    >
+                      Back to Top <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+                    </button>
+                    <p className="text-[10px] text-gray-600 mt-6 font-mono">
+                        &copy; {currentYear} AP Agency Inc.<br/>Richmond Hill, ON.
+                    </p>
+                </div>
+            </div>
+
           </div>
-
-          {/* Location Time Stub (Visual) */}
-          <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-[#111] rounded border border-[#333] order-2">
-             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-             <span className="text-xs text-gray-400" style={fonts.mono}>OPERATIONAL / RICHMOND HILL</span>
-          </div>
-
         </div>
+      </div>
 
-        {/* MASSIVE BRANDING */}
-        <div className="w-full text-center mt-12 md:mt-24 select-none pointer-events-none">
-          <h1 
-            className="text-[14vw] leading-[0.8] text-[#111] font-bold tracking-tighter mix-blend-difference"
-            style={{ ...fonts.display, color: "#B9935B", textShadow: "-1px -1px 0 #222, 1px -1px 0 #222, -1px 1px 0 #222, 1px 1px 0 #222" }}
-          >
-            AP AGENCY
-          </h1>
+      {/* 3. Massive Brand Watermark (With GSAP Parallax) */}
+      <div 
+        className="border-t border-[#B9935B]/30 overflow-hidden w-full relative z-10"
+        style={{ backgroundColor: COLORS.gold }}
+      >
+        <div className="footer-brand-text flex justify-center w-full pt-6 pb-2">
+            <h1 
+              className="text-[18vw] uppercase text-[#050505] mix-blend-multiply leading-none select-none tracking-tighter"
+              style={{ 
+                fontFamily: "'Kanit', sans-serif",
+                fontWeight: 900 
+              }}
+            >
+                AP Agency
+            </h1>
         </div>
-
       </div>
     </footer>
   );
 }
+
+export default Footer;

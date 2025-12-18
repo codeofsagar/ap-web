@@ -1,188 +1,185 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { ArrowRight, Calendar, CheckCircle2, X } from 'lucide-react';
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
+import { IconArrowUpRight, IconBarcode } from "@tabler/icons-react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const COLORS = {
+  gold: "#B9935B",
+  bg: "#FFFBF6",
+  black: "#000000",
+};
+
+const FONTS = {
+  display: { fontFamily: "'Kanit', sans-serif", fontWeight: 900 },
+  mono: { fontFamily: "'IBM Plex Mono', monospace" },
+  body: { fontFamily: "'Inter', sans-serif" },
+};
 
 function HomeContact() {
   const [showCalendar, setShowCalendar] = useState(false);
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const ticketRef = useRef<HTMLDivElement>(null);
 
-  const yBg = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  useGSAP(() => {
+    // 1. Parallax/Reveal Text Effect
+    gsap.fromTo(
+      textRef.current,
+      { y: 60, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 70%",
+        },
+      }
+    );
 
-  // --- Font Configuration ---
-  const fonts = {
-    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers
-    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Badges / Specs
-    body: { fontFamily: "'Inter', sans-serif" }, // Body text
-  };
+    // 2. Ticket Entrance
+    gsap.fromTo(
+      ticketRef.current,
+      { scale: 0.9, opacity: 0, y: 40 },
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 60%",
+        },
+      }
+    );
+  }, { scope: containerRef });
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full py-32 lg:py-48 overflow-hidden flex items-center justify-center"
-      style={fonts.body}
+      className="bg-[#FFFBF6] text-black py-24 lg:py-48 px-4 relative overflow-hidden border-t border-black/10"
+      style={FONTS.body}
     >
-      {/* --- BACKGROUND ELEMENTS --- */}
-      
-      {/* Moving Grid */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
-           style={{ 
-               backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
-               backgroundSize: '50px 50px' 
-           }}>
-      </div>
-
-      {/* Floating Gold Glows */}
-      <motion.div 
-        style={{ y: yBg }}
-        className="absolute top-0 right-0 w-[500px] h-[500px] blur-[120px] rounded-full pointer-events-none"
+      {/* --- Background Elements --- */}
+      <div 
+        className="absolute inset-0 z-[1] opacity-[0.06] mix-blend-multiply pointer-events-none"
+        style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'grayscale(100%)'
+        }}
       />
-      <motion.div 
-        style={{ y: yBg }}
-        className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#B9935B]/5 blur-[120px] rounded-full pointer-events-none"
-      />
+      <div className="absolute top-0 left-1/4 w-px h-full bg-black/[0.03] z-[1]"></div>
+      <div className="absolute top-0 right-1/4 w-px h-full bg-black/[0.03] z-[1]"></div>
 
-      {/* --- CONTENT --- */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
+      <div className="max-w-7xl mx-auto relative z-10 text-center">
         
-        {/* Badge */}
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B9935B]/10 border border-[#B9935B]/20 backdrop-blur-md mb-8"
-        >
-            <span className="w-2 h-2 rounded-full bg-[#B9935B] animate-pulse"></span>
-            {/* IBM Plex Mono for Technical Badge */}
-            <span className="text-xs font-bold uppercase tracking-widest text-[#B9935B]" style={fonts.mono}>
-              Limited Availability for Q4
+        {/* --- Headline Section --- */}
+        <div ref={textRef} className="mb-16 lg:mb-24">
+          <div className="inline-flex items-center gap-2 border border-[#B9935B] rounded-full px-4 py-1 mb-8 bg-white/50 backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: COLORS.gold }}></span>
+            <span className="text-xs uppercase tracking-widest font-bold" style={{ ...FONTS.display, color: COLORS.gold }}>
+              Limited Q4 Availability
             </span>
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-8xl leading-none text-white uppercase mb-8"
-            style={fonts.display} // Kanit Bold
-        >
+          </div>
+          
+          <h2 className="text-[11vw] lg:text-[7vw] leading-[0.85] mb-8 text-black uppercase tracking-tighter" style={FONTS.display}>
             Stop Losing <br />
-            <span className="text-transparent" style={{ WebkitTextStroke: '1px #B9935B' }}>
-                Revenue Today
+            <span className="text-transparent" style={{ WebkitTextStroke: '1.5px black' }}>
+              Revenue Today
             </span>
-        </motion.h2>
+          </h2>
+          <p className="text-gray-500 max-w-xl mx-auto text-lg" style={FONTS.body}>
+            Your landing page shouldn&apos;t be your bottleneck. Grab a boarding pass for a free 30-minute audit.
+          </p>
+        </div>
 
-        {/* Subheadline */}
-        <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 font-light leading-relaxed"
-            style={fonts.body} // Inter
-        >
-            Your traffic is expensive. Your landing page shouldn&apos;t be the bottleneck. 
-            Book a free 30-minute audit and we&apos;ll show you exactly where you&apos;re leaving money on the table.
-        </motion.p>
+        {/* --- The Boarding Pass CTA --- */}
+        <div className="flex justify-center" ref={ticketRef}>
+          <div
+            onClick={() => setShowCalendar(true)}
+            className="group relative w-full max-w-2xl bg-white border-2 border-black flex flex-col md:flex-row shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_#B9935B] transition-all duration-500 hover:-translate-y-2 cursor-pointer overflow-hidden"
+          >
+            {/* Left Side: Ticket Details */}
+            <div className="flex-1 p-8 md:p-10 border-b-2 md:border-b-0 md:border-r-2 border-black/10 border-dashed relative">
+              <div className="flex justify-between mb-8">
+                <div className="text-left">
+                  <p className="text-[10px] uppercase text-gray-400 mb-1" style={FONTS.mono}>Gate / Session</p>
+                  <p className="text-lg uppercase" style={FONTS.display}>Audit & Strategy</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] uppercase text-gray-400 mb-1" style={FONTS.mono}>Duration</p>
+                  <p className="text-lg uppercase" style={FONTS.display}>30 Min</p>
+                </div>
+              </div>
 
-        {/* Trust Indicators */}
-        <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-6 mb-12 text-sm text-gray-400"
-            style={fonts.mono} // IBM Plex Mono for Specs
-        >
-            <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-[#B9935B]" />
-                <span>No Commitment Required</span>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 text-white flex items-center justify-center rounded-full bg-black group-hover:bg-[#B9935B] transition-colors duration-300">
+                  <IconBarcode size={24} />
+                </div>
+                <div className="text-left">
+                  <p className="text-xl uppercase leading-none mb-1" style={FONTS.display}>Free Consultation</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-widest" style={FONTS.mono}>Claim your spot now</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-[#B9935B]" />
-                <span>Actionable Insights</span>
-            </div>
-            <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-[#B9935B]" />
-                <span>Direct Access to Founders</span>
-            </div>
-        </motion.div>
 
-        {/* CTA Button - Opens Modal */}
-        <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="relative inline-block group"
-        >
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#B9935B] to-[#FBF5E6] rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-200"></div>
-            <button 
-                onClick={() => setShowCalendar(true)}
-                className="relative flex items-center gap-4 bg-[#B9935B] text-black px-10 py-5 rounded-lg hover:bg-[#cba264] transition-all duration-300 transform group-hover:-translate-y-1 cursor-pointer"
-            >
-                <Calendar className="w-5 h-5" />
-                {/* Kanit Bold for Button Text */}
-                <span className="font-bold text-lg uppercase tracking-wider" style={fonts.display}>
-                    Book Your Strategy Call
+            {/* Right Side: Action Button */}
+            <div className="w-full md:w-32 bg-black group-hover:bg-[#B9935B] transition-colors duration-300 flex items-center justify-center p-6">
+              <div className="flex flex-row md:flex-col items-center gap-3 text-white group-hover:text-black">
+                <span className="uppercase tracking-widest text-sm md:[writing-mode:vertical-rl]" style={FONTS.display}>
+                  Book Now
                 </span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-        </motion.div>
+                <IconArrowUpRight className="w-6 h-6 transition-transform group-hover:rotate-45" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* --- MODAL --- */}
+      {/* --- MODAL (CALENDLY) --- */}
       <AnimatePresence>
         {showCalendar && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-10"
+          >
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={() => setShowCalendar(false)} />
+            
             <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-5xl h-full max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl"
             >
-                {/* Backdrop */}
-                <div 
-                    className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-                    onClick={() => setShowCalendar(false)}
-                ></div>
+              <div className="absolute top-0 left-0 right-0 h-14 bg-white border-b border-gray-100 flex items-center justify-between px-6 z-20">
+                <span className="text-xs font-bold uppercase tracking-widest" style={FONTS.mono}>Scheduling Portal</span>
+                <button onClick={() => setShowCalendar(false)} className="text-black hover:rotate-90 transition-transform duration-300">
+                  <X size={24} />
+                </button>
+              </div>
 
-                {/* Modal Content */}
-                <motion.div 
-                    initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                    className="relative w-full max-w-4xl h-[85vh] bg-[#111] border border-[#B9935B]/30 rounded-2xl overflow-hidden shadow-2xl shadow-[#B9935B]/20"
-                >
-                    {/* Header */}
-                    <div className="absolute top-0 left-0 right-0 h-12 bg-[#1a1a1a] border-b border-[#2a2a2a] flex items-center justify-end px-4 z-20">
-                          <button 
-                            onClick={() => setShowCalendar(false)}
-                            className="text-gray-400 hover:text-white transition-colors p-1"
-                          >
-                             <X size={20} />
-                          </button>
-                    </div>
-
-                    {/* Calendly Iframe with Dark Mode Params */}
-                    <iframe 
-                        src="https://calendly.com/apdigitalagency/30-minute-landing-page-consultation-1?back=1&month=2025-11&hide_gdpr_banner=1&background_color=111111&text_color=ffffff&primary_color=B9935B"
-                        width="100%" 
-                        height="100%" 
-                        frameBorder="0" 
-                        title="Calendly Scheduling Page"
-                        className="w-full h-full pt-8" // pt-8 to clear the close button bar
-                    ></iframe>
-                </motion.div>
+              <iframe 
+                src="https://calendly.com/apdigitalagency/30-minute-landing-page-consultation-1?hide_gdpr_banner=1&primary_color=B9935B"
+                width="100%" 
+                height="100%" 
+                className="w-full h-full pt-14"
+                title="Calendly"
+              />
             </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
-
     </section>
   );
 }

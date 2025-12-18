@@ -37,17 +37,17 @@ export default function RootLayout({
           <InitialLoadProvider>
             <FooterProvider>
               <body
-                className={`${saans.className} antialiased  text-neutral-900 bg-zinc-950 dark:bg-zinc-900`}
+                className={`${saans.className} antialiased  text-neutral-900 bg-black dark:bg-zinc-900`}
               >
                
                 <LoadingScreen />
                 <DocumentTitleChanger />
-                 <AuroraBackground  >
+                
                 <CTAButton />
                 {children}
                 <FooterWrapper />
                 <Analytics />
-                </AuroraBackground>
+                
               </body>
             </FooterProvider>
           </InitialLoadProvider>

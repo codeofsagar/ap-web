@@ -88,11 +88,13 @@ function AboutSection() {
 
   return (
     <section
+     
       ref={containerRef}
       id="about"
-      className="relative min-h-screen flex flex-col justify-center py-20 overflow-hidden text-white"
-      style={fonts.body} // Default to Inter
+      className="about-section relative min-h-screen flex flex-col justify-center py-20 overflow-hidden text-white"
+      style={fonts.body}
     >
+    
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         
         {/* --- HERO TEXT SECTION --- */}
