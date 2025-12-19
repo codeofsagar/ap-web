@@ -1,9 +1,6 @@
 "use client";
 import Link from "next/link";
 import React, { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import gsap from "gsap";
 import { ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 
 function PackageSection() {
@@ -25,33 +22,6 @@ function PackageSection() {
     { title: "Support", desc: "7-Day post-launch monitoring + 1 Revision round" }
   ];
 
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 60%",
-      },
-    });
-
-    tl.from(".pkg-reveal", {
-      y: 80,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: "power4.out",
-    })
-    .from(".pkg-feature", {
-      x: -30,
-      opacity: 0,
-      stagger: 0.08,
-      duration: 0.8,
-      ease: "power2.out"
-    }, "-=0.5");
-
-  }, { scope: containerRef });
-
   return (
     <section
       ref={containerRef}
@@ -63,10 +33,10 @@ function PackageSection() {
         
         {/* --- HEADER --- */}
         <div className="mb-24">
-          <p style={{ ...fonts.mono, color: "#B9935B" }} className="pkg-reveal text-sm tracking-[0.4em] uppercase mb-6">
+          <p style={{ ...fonts.mono, color: "#B9935B" }} className="text-sm tracking-[0.4em] uppercase mb-6">
             [ THE CORE OFFERING ]
           </p>
-          <h2 className="pkg-reveal text-6xl md:text-9xl  leading-[0.85] " style={fonts.display}>
+          <h2 className="text-6xl md:text-9xl leading-[0.85]" style={fonts.display}>
             LANDING <span className="text-[#B9935B]">BOOSTER.</span>
           </h2>
         </div>
@@ -76,7 +46,7 @@ function PackageSection() {
           
           {/* LEFT: AUDIENCE & VIDEO */}
           <div className="lg:col-span-5 bg-[#0a0a0a] p-10 flex flex-col justify-between min-h-[600px] relative overflow-hidden group border-b lg:border-b-0 lg:border-r border-white/10">
-            <div className="absolute inset-0 opacity-30  transition-all duration-1000">
+            <div className="absolute inset-0 opacity-30 transition-all duration-1000">
                <video autoPlay loop muted playsInline className="w-full h-full object-cover">
                  <source src="/music/music.mp4" type="video/mp4" />
                </video>
@@ -104,20 +74,20 @@ function PackageSection() {
             </div>
           </div>
 
-          {/* RIGHT: SPECS LIST (FIXED TEXT VISIBILITY) */}
+          {/* RIGHT: SPECS LIST */}
           <div className="lg:col-span-7 bg-[#080808] p-10 lg:p-16">
-            <h4 style={fonts.mono} className="text-md uppercase  text-[#B9935B] mb-12 block">
+            <h4 style={fonts.mono} className="text-md uppercase text-[#B9935B] mb-12 block">
               The Specifications
             </h4>
 
             <div className="space-y-2">
               {features.map((item, idx) => (
-                <div key={idx} className="pkg-feature group flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-white/5 hover:bg-white/[0.03] transition-all px-6 -mx-6">
+                <div key={idx} className="group flex flex-col md:flex-row md:items-center justify-between py-8 border-b border-white/5 hover:bg-white/[0.03] transition-all px-6 -mx-6">
                   <div className="flex items-center gap-6 mb-2 md:mb-0">
                     <span style={fonts.mono} className="text-sm text-[#B9935B] font-bold">
                       0{idx + 1}
                     </span>
-                    <span className="text-2xl md:text-3xl uppercase  text-white group-hover:translate-x-2 transition-transform" style={fonts.body}>
+                    <span className="text-2xl md:text-3xl uppercase text-white group-hover:translate-x-2 transition-transform" style={fonts.body}>
                       {item.title}
                     </span>
                   </div>
@@ -132,7 +102,7 @@ function PackageSection() {
         </div>
 
         {/* --- PRICING & CTA --- */}
-        <div className="price-card mt-24 bg-[#B9935B] p-[1px]">
+        <div className="mt-24 bg-[#B9935B] p-[1px]">
           <div className="bg-[#0a0a0a] grid grid-cols-1 lg:grid-cols-2 items-center">
             <div className="p-12 lg:p-20">
                <p style={fonts.mono} className="text-sm uppercase tracking-widest text-[#B9935B] mb-4">Total Investment</p>
