@@ -65,37 +65,9 @@ export default function Project({ params }: { params: Promise<PageParams> }) {
         <div className="flex flex-col gap-12 lg:gap-16 2xl:gap-[clamp(64px,5vw,150px)] px-4 lg:px-5 pt-5 lg:pt-6 pb-4 lg:pb-5 rounded-lg lg:rounded-xl bg-neutral-800">
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-12">
             <div className="flex flex-col gap-3 col-span-2">
-              <div className="overflow-hidden">
-                <motion.p
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{
-                    duration: 1,
-                    delay: isInitialLoad ? 3.2 : 1.2,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="text-xs lg:text-[clamp(14px,0.8vw,18px)] text-neutral-400 uppercase font-medium tracking-wider"
-                  style={fonts.mono} // IBM Plex Mono for Label
-                >
-                  Year
-                </motion.p>
-              </div>
+          
 
-              <div className="overflow-hidden">
-                <motion.p
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{
-                    duration: 1,
-                    delay: isInitialLoad ? 3.3 : 1.3,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="text-[clamp(48px,3.5vw,96px)] text-neutral-100 font-semibold tracking-tight leading-[0.8]"
-                  style={fonts.display} // Kanit for the Number
-                >
-                  {project.year}
-                </motion.p>
-              </div>
+           
             </div>
 
             <div className="flex flex-col gap-3 col-span-4">

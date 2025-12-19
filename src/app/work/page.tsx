@@ -13,20 +13,7 @@ export default function Work() {
     <main className="">
      
       <div className="px-4 lg:px-8 pt-[200px] md:pt-30">
-        <div className="overflow-hidden mb-3 lg:mb-5">
-          <motion.p
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            transition={{
-              duration: 0.8,
-              delay: isInitialLoad ? 2.8 : 0.8,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="text-3xl font-medium text-[#B9935B]"
-          >
-            [2024-2025]
-          </motion.p>
-        </div>
+     
         <div className="overflow-hidden">
           <motion.h1
             initial={{ y: "100%" }}

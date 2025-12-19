@@ -102,9 +102,7 @@ export default function ProjectCard({
               <p className="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-300 tracking-wide">
                 {project.category}
               </p>
-              <p className="text-[clamp(14px,1.2vw,18px)] uppercase font-semibold text-neutral-300 tracking-wide">
-                {project.year}
-              </p>
+             
             </div>
           </div>
 

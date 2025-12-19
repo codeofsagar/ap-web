@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-// 1. Added CSSProperties to the import here
 import React, { useRef, CSSProperties } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,19 +8,13 @@ import gsap from "gsap";
 
 function AboutSection() {
   const containerRef = useRef(null);
-  const titleRef = useRef(null);
-  const contentRef = useRef(null);
-  const statsRef = useRef(null);
-  const imageRef = useRef(null);
 
-  // --- Font Configuration ---
   const fonts = {
-    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 }, // Headers / Big Numbers
-    mono: { fontFamily: "'IBM Plex Mono', monospace" }, // Accents / Tech / Buttons
-    body: { fontFamily: "'Inter', sans-serif" }, // Paragraphs
+    display: { fontFamily: "'Kanit', sans-serif", fontWeight: 700 },
+    mono: { fontFamily: "'IBM Plex Mono', monospace" },
+    body: { fontFamily: "'Inter', sans-serif" },
   };
 
-  // 2. FIXED: Explicitly typed this as CSSProperties to fix the textTransform error
   const accentStyle: CSSProperties = {
     color: "#B9935B",
     ...fonts.mono,
@@ -31,178 +24,161 @@ function AboutSection() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top 75%",
-        end: "bottom bottom",
-        toggleActions: "play none none reverse",
-      },
-    });
-
-    // 1. Reveal Title Words
-    tl.from(".word-anim", {
+    // Fade in lines
+    gsap.from(".reveal-line", {
       y: 100,
       opacity: 0,
-      duration: 1,
-      stagger: 0.1,
+      duration: 1.2,
+      stagger: 0.2,
       ease: "power4.out",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 60%",
+      }
     });
 
-    // 2. Reveal Image & Text Content
-    tl.from(
-      [contentRef.current, imageRef.current],
-      {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out",
-      },
-      "-=0.5"
-    );
-
-    // 3. Stats Separation Line & Numbers
-    tl.from(".stat-item", {
-      scale: 0.8,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: "back.out(1.7)",
-    }, "-=0.5");
-
-    // Parallax Icons
-    gsap.to(".floating-icon", {
-      y: "30px",
-      rotation: 10,
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      stagger: {
-        amount: 2,
-        from: "random",
-      },
+    // Image Parallax
+    gsap.to(".parallax-img", {
+      yPercent: 20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".img-viewport",
+        scrub: true
+      }
     });
   }, { scope: containerRef });
 
   return (
     <section
-     
       ref={containerRef}
       id="about"
-      className="about-section relative min-h-screen flex flex-col justify-center py-20 overflow-hidden text-white"
+      className="relative min-h-screen py-24 bg-[#0a0a0a] text-white overflow-hidden"
       style={fonts.body}
     >
-    
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        
-        {/* --- HERO TEXT SECTION --- */}
-        <div ref={titleRef} className="flex flex-col gap-2 mb-16 lg:mb-24">
-          {/* Line 1 */}
-          <div className="overflow-hidden">
-            <h2 className="text-3xl md:text-5xl lg:text-7xl tracking-tight leading-[1.1]">
-              {/* Kanit for the lead-in */}
-              <span className="word-anim inline-block mr-4" style={fonts.display}>You have the</span>
-              {/* Mono for the emphasis */}
-              <span className="word-anim inline-block" 
-              style={accentStyle}>
-                BEST ADS
-              </span>
-            </h2>
-          </div>
-          
-          {/* Line 2 */}
-          <div className="overflow-hidden">
-            <h2 className="text-3xl md:text-5xl lg:text-7xl tracking-tight leading-[1.1]">
-              <span className="word-anim inline-block mr-4" style={fonts.display}>in the world,</span>
-              <span className="word-anim inline-block opacity-70 italic font-serif mr-4">but...</span>
-            </h2>
+      {/* 1. TOP HEADER SECTION */}
+      <div className="container mx-auto px-6 lg:px-12 border-b border-white/10 pb-20">
+        <div className="flex flex-col lg:flex-row justify-between items-start gap-10">
+          {/* Left: The Technical Label */}
+          <div className="lg:w-1/3">
+            <p style={accentStyle} className="text-sm tracking-[0.5em] leading-loose">
+              Conversion Architecture <br /> 
+              Strategy / Design 
+            </p>
           </div>
 
-          {/* Line 3 - BIG IMPACT */}
-          <div className="overflow-hidden mt-2">
-            <h2 className="text-4xl md:text-6xl lg:text-8xl leading-[1]">
-              <span className="word-anim inline-block mr-4" style={fonts.display}>Your landing page</span>
-              <span className="word-anim inline-block border-b-4 border-[#B9935B]" style={accentStyle}>
-                SUCKS?
-              </span>
+          {/* Right: The Brutalist Headline */}
+          <div className="lg:w-2/3">
+            <h2 className="reveal-line text-6xl md:text-7xl lg:text-[10rem] leading-[0.85] " style={fonts.display}>
+              BEST ADS<br />
+              <span className="text-[#B9935B]" >UGLY PAGE ?</span>
             </h2>
           </div>
         </div>
+      </div>
 
-        {/* --- GRID CONTENT SECTION --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      {/* 2. MIDDLE CONTENT SECTION (REVERSED) */}
+      <div className="container mx-auto px-6 lg:px-12 py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           
-          {/* Column 1: Text Content (Span 5) */}
-          <div ref={contentRef} className="lg:col-span-5 flex flex-col justify-between h-full gap-8">
-            <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light" style={fonts.body}>
-              You are throwing <span style={accentStyle} className="text-sm md:text-base mx-1">MONEY</span> 
-              into the <span style={accentStyle} className="text-sm md:text-base mx-1">FIRE</span>.
-              <br /><br />
-              Our landing pages don&apos;t just look pretty—they convert visitors into customers. 
-              Fast loading, clean design, and strategic psychology turn clicks into cash.
-            </p>
+          {/* Left: Huge Stat/Label */}
+          <div className="lg:col-span-5">
+             <div className="img-viewport relative aspect-[4/5] overflow-hidden border border-[#B9935B]/30">
+                <Image 
+                  src="/images/ss.png" 
+                  alt="Conversion" 
+                  fill 
+                  className="parallax-img object-cover scale-125 grayscale hover:grayscale-0 transition-all duration-700" 
+                />
+             </div>
+          </div>
 
-            <div className="pt-4">
-               <Link
+          {/* Right: The High-Impact Copy */}
+          <div className="lg:col-span-7 space-y-20">
+            <div>
+               <h3 className="text-4xl md:text-6xl leading-tight mb-8" style={fonts.display}>
+                YOU HAVE THE <span style={{color: "#B9935B"}}>BEST ADS</span> IN THE WORLD, BUT... <br/>
+                YOUR LANDING PAGE <span className="underline decoration-[#B9935B]">SUCKS?</span>
+               </h3>
+               <p className="text-xl md:text-3xl text-gray-400 font-light leading-relaxed">
+                 <span style={accentStyle} className="text-white block mb-4 text-base tracking-[0.2em]">[ STOP BURNING MONEY ]</span><br/>
+                 Your traffic is elite. Your destination is mediocre. We bridge the gap between attention and revenue.
+               </p>
+            </div>
+
+            {/* Strategic Pillars - Restyled bigger */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-white/10 pt-12">
+              <div>
+                <span style={accentStyle} className="text-lg block mb-4">01 / Strategy</span>
+                <p className="text-xl text-gray-300">Fast loading, clean design, and strategic psychology turn clicks into cash.</p>
+              </div>
+              <div>
+                <span style={accentStyle} className="text-lg block mb-4">02 / Results</span>
+                <p className="text-xl text-gray-300">We don&apos;t build websites; we build high-converting sales machines.</p>
+              </div>
+            </div>
+
+            {/* BIGGER Call to Action */}
+            <div className="pt-10">
+              <Link
                 href="#conversion"
-                className="group relative inline-flex items-center gap-3 text-[#B9935B] text-sm tracking-[0.2em] uppercase font-bold"
-                style={fonts.mono}
+                className="group flex items-center justify-between border-y border-white/20 py-10 hover:border-[#B9935B] transition-colors duration-500"
               >
-                <span className="w-12 h-[1px] bg-[#B9935B] transition-all group-hover:w-20"></span>
-                Ignite Conversions
+                <span className="text-4xl md:text-7xl uppercase group-hover:text-[#B9935B] transition-all" style={fonts.display}>
+                  BOOK A AUDIT
+                </span>
+                <span className="text-4xl md:text-7xl group-hover:translate-x-4 transition-transform text-[#B9935B]">
+                  &rarr;
+                </span>
               </Link>
             </div>
           </div>
-
-          {/* Column 2: Image (Span 7) */}
-          <div ref={imageRef} className="lg:col-span-7 relative">
-            <div className="relative w-full aspect-[16/9] lg:aspect-[16/8] rounded-none border border-[#B9935B]/30 overflow-hidden">
-               {/* Overlay Gradient for text readability */}
-               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-               <Image
-                src="/images/ss.png"
-                alt="Conversion rate skyrocketing"
-                fill
-                className="object-cover transition-transform duration-[2s] hover:scale-105"
-              />
-            </div>
-            {/* Decorative box behind image */}
-            <div className="absolute -bottom-6 -right-6 w-full h-full border border-[#B9935B]/20 -z-10 hidden lg:block" />
-          </div>
-        </div>
-
-        {/* --- STATS FOOTER --- */}
-        <div ref={statsRef} className="mt-24 pt-12 border-t border-[#B9935B]/40 grid grid-cols-1 md:grid-cols-2 gap-12">
-          
-          <div className="stat-item">
-            {/* Kanit for the Big Number (Impact) */}
-            <div className="text-5xl md:text-7xl mb-2" style={{ ...fonts.display, color: "#B9935B" }}>90%</div>
-            {/* Mono for the Description (Technical) */}
-            <p className="text-gray-400 text-sm tracking-wide uppercase" style={fonts.mono}>
-              of visitors bounce in <br />the first 3 seconds
-            </p>
-          </div>
-
-          <div className="stat-item md:text-right">
-             <div className="text-5xl md:text-7xl mb-2" style={{ ...fonts.display, color: "#B9935B" }}>3.2X</div>
-            <p className="text-gray-400 text-sm tracking-wide uppercase" style={fonts.mono}>
-              better conversion than <br />industry averages
-            </p>
-          </div>
-
         </div>
       </div>
 
-      {/* --- FLOATING ICONS (DECORATION) --- */}
-      <div className="floating-icon absolute top-20 right-[5%] opacity-20 pointer-events-none w-24 h-24">
-        <Image src="/images/urchinIcon.png" alt="Icon" fill className="object-contain" />
-      </div>
-      <div className="floating-icon absolute bottom-40 left-[5%] opacity-20 pointer-events-none w-32 h-32">
-         <Image src="/images/flowerSwiss.png" alt="Icon" fill className="object-contain" />
+      {/* 3. AWARDS FOOTER */}
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 border border-white/10 bg-white/5 backdrop-blur-md">
+          <div className="p-12 border-r border-white/10 hover:bg-[#B9935B] group transition-all duration-500">
+            <span style={fonts.mono} className="text-xs uppercase tracking-widest text-[#B9935B] group-hover:text-black">Traffic Retention</span>
+            <div style={fonts.display} className="text-8xl my-4 group-hover:text-black">90%</div>
+            <p className="text-xs uppercase tracking-widest opacity-50 group-hover:text-black">of visitors bounce in the first 3 seconds</p>
+          </div>
+
+          <div className="p-12 border-r border-white/10 hover:bg-[#B9935B] group transition-all duration-500">
+            <span style={fonts.mono} className="text-xs uppercase tracking-widest text-[#B9935B] group-hover:text-black">Revenue Impact</span>
+            <div style={fonts.display} className="text-8xl my-4 group-hover:text-black">3.2X</div>
+            <p className="text-xs uppercase tracking-widest opacity-50 group-hover:text-black">better conversion than industry averages</p>
+          </div>
+
+          {/* CIRCLE BADGE SECTION */}
+          <div className="p-12 flex items-center justify-center relative overflow-hidden group">
+             {/* Static Star */}
+             <div className="absolute z-10 text-[#B9935B] text-5xl animate-pulse">★</div>
+             
+             {/* Rotating Text */}
+             <div className="animate-spin-slow">
+                <svg viewBox="0 0 100 100" className="w-48 h-48 md:w-56 md:h-56">
+                    <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"/>
+                    <text className="fill-white/30 text-[7px] uppercase tracking-[0.25em]" style={fonts.mono}>
+                        <textPath xlinkHref="#circlePath">
+                          Award Winning Design • High Performance Architecture • Elite Strategy •
+                        </textPath>
+                    </text>
+                </svg>
+             </div>
+          </div>
+        </div>
       </div>
 
+      <style jsx>{`
+        .animate-spin-slow {
+          animation: spin 12s linear infinite;
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </section>
   );
 }

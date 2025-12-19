@@ -77,7 +77,7 @@ const HeroSection: React.FC = () => {
         <HeroGradient />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 md:px-20 py-30 md:py-12 min-h-screen flex flex-col justify-center md:gap-12 gap-0" style={fonts.body}>
+      <div className="relative z-10 container mx-auto px-4 md:px-20 py-30 md:py-12 min-h-screen flex flex-col justify-center md:gap-10 gap-0" style={fonts.body}>
         
        
           <motion.div 
@@ -87,19 +87,19 @@ const HeroSection: React.FC = () => {
           transition={{ duration: 0.8 }}
         >
           <motion.h2 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl uppercase mt-0 md:mt-16 " 
+            className="text-5xl sm:text-6xl md:text-8xl uppercase mt-0 md:mt-10 " 
             style={{ 
               color: "#B9935B", 
               ...fonts.display,
               textShadow: "0px 10px 30px rgba(185, 147, 91, 0.2)" // Adds slight depth to the large text
             }}
           >
-            Landing Page <br /> Lead Booster
+            Landing <span className='text-white'> Page</span>  <br />  <span className='text-white'> Lead</span> Booster
           </motion.h2>
           
           {/* Subtext: by ap agency */}
           <motion.p 
-            className="text-sm md:text-base lg:text-lg  uppercase text-gray-400 mt-4 md:mt-6"
+            className="text-sm md:text-base lg:text-lg  uppercase text-gray-400 mt-4 md:mt-2"
             style={fonts.mono}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -117,7 +117,7 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <div className="space-y-4 md:space-y-9">
-              <motion.h1 className="text-3xl md:text-7xl font-bold text-white" style={fonts.display}>
+              <motion.h1 className="text-3xl md:text-6xl font-bold text-white" style={fonts.display}>
                 Turn <span style={{ color: "#B9935B" }}>Clicks </span>
                 Into <span style={{ color: "#B9935B" }}>Clients</span>.
               </motion.h1>
@@ -156,7 +156,7 @@ const HeroSection: React.FC = () => {
 
           {/* Right Section - Image Stack */}
           <div className="w-full flex items-center justify-center order-1 lg:order-2">
-            <div className="relative w-72 md:w-full max-w-6xl h-[180px] sm:h-[280px] md:h-[400px]">
+            <div className="relative w-72 md:w-[550px] max-w-4xl h-[180px] sm:h-[280px] md:h-[370px]">
               {websiteImages.map((image, index) => {
                 const position = getImagePosition(index);
                 const isCurrent = index === currentImage;
@@ -184,7 +184,7 @@ const HeroSection: React.FC = () => {
                       <img src={image.url} alt={image.alt} className="w-full h-full object-cover" />
                       {isCurrent && (
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent p-4 flex flex-col justify-end">
-                          <h3 className="text-white text-sm md:text-lg" style={fonts.display}>{image.title}</h3>
+                          <h3 className="text-[#B9935B] text-sm md:text-lg mb-8" style={fonts.display}>{image.title}</h3>
                         </div>
                       )}
                     </div>
