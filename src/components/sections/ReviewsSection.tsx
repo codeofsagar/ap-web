@@ -171,7 +171,7 @@ export default function GoldenPrecisionReviews() {
           
           <Link 
             href="/contact"
-            className="relative z-10 group inline-flex items-center gap-6 px-12 py-6 bg-[#B9935B] text-black font-black uppercase tracking-[0.3em] text-sm transition-transform hover:scale-105"
+            className="relative z-10 group inline-flex items-center gap-6 px-12 py-6 bg-[#B9935B] text-black font-semibold uppercase tracking-[0.3em] text-sm transition-transform hover:scale-105"
             style={fonts.body}
           >
             Deploy Buying Machine

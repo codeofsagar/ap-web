@@ -117,7 +117,7 @@ function PackageSection() {
                 href="/contact" 
                 className="group flex items-center justify-between bg-[#B9935B] p-10 text-black transition-all hover:bg-white"
               >
-                <span style={fonts.display} className="text-3xl md:text-5xl uppercase ">IGNITE CONVERSIONS</span>
+                <span style={fonts.body} className="text-2xl md:text-4xl uppercase ">IGNITE CONVERSIONS</span>
                 <ArrowRight size={40} className="group-hover:translate-x-4 transition-transform" />
               </Link>
               <div className="flex justify-between items-center opacity-40" style={fonts.mono}>
