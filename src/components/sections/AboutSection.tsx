@@ -81,13 +81,13 @@ function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           
           {/* Left: Huge Stat/Label */}
-          <div className="lg:col-span-5">
-             <div className="img-viewport relative aspect-[9/16] overflow-hidden b ">
+          <div className="lg:col-span-5 flex justify-center lg:justify-start">
+             <div className="relative aspect-[9/16] w-58 sm:w-64 md:w-80 lg:w-full overflow-hidden ">
                 <Image 
                   src="/web.jpg" 
                   alt="Conversion" 
                   fill 
-                  className="" 
+                  className=" " 
                 />
              </div>
           </div>
@@ -106,14 +106,14 @@ function AboutSection() {
             </div>
 
             {/* Strategic Pillars - Restyled bigger */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-white/10 pt-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-white pt-12">
               <div>
                 <span style={accentStyle} className="text-lg block mb-4">01 / Strategy</span>
-                <p className="text-xl text-gray-300">Fast loading, clean design, and strategic psychology turn clicks into cash.</p>
+                <p className="text-xl text-white">Fast loading, clean design, and strategic psychology turn clicks into cash.</p>
               </div>
               <div>
                 <span style={accentStyle} className="text-lg block mb-4">02 / Results</span>
-                <p className="text-xl text-black">We don&apos;t build websites; we build high-converting sales machines.</p>
+                <p className="text-xl text-white">We don&apos;t build websites; we build high-converting sales machines.</p>
               </div>
             </div>
 
