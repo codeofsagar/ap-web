@@ -11,6 +11,7 @@ import { metadata } from "./metadata";
 import FooterWrapper from "@/components/layout/FooterWrapper";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import { InitialLoadProvider } from "@/contexts/initial-load-context";
+import { BackgroundProvider } from "@/components/ui/BackgroundContext";
 
 export { metadata };
 
@@ -37,9 +38,10 @@ export default function RootLayout({
           <InitialLoadProvider>
             <FooterProvider>
               <body
-                className={`${saans.className} antialiased  text-neutral-900 bg-black dark:bg-zinc-900`}
+                className={`${saans.className} antialiased  text-neutral-900 bg-black `}
               >
-               
+                <BackgroundProvider>
+                
                 <LoadingScreen />
                 <DocumentTitleChanger />
                 
@@ -47,6 +49,7 @@ export default function RootLayout({
                 {children}
                 <FooterWrapper />
                 <Analytics />
+                </BackgroundProvider>
                 
               </body>
             </FooterProvider>

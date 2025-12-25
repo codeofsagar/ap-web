@@ -117,9 +117,9 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <div className="space-y-4 md:space-y-9">
-              <motion.h1 className="text-3xl md:text-6xl font-bold text-white" style={fonts.display}>
+              <motion.h1 className="text-3xl md:text-6xl font-bold text-white uppercase" style={fonts.display}>
                 Turn <span style={{ color: "#B9935B" }}>Clicks </span>
-                Into <span style={{ color: "#B9935B" }}>Clients</span>.
+                Into <span style={{ color: "#B9935B" }}>Clients</span>
               </motion.h1>
 
               <div className="space-y-2 md:space-y-4">
@@ -144,7 +144,7 @@ const HeroSection: React.FC = () => {
                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out z-0" />
 
                 <span 
-                  className="relative z-20 font-black text-sm md:text-base uppercase tracking-[0.2em] flex items-center gap-4"
+                  className="relative z-20 font-[700] text-sm md:text-base uppercase tracking-[0.2em] flex items-center gap-4"
                   style={fonts.mono} 
                 >
                   Build My Page Now

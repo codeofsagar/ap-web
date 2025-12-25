@@ -142,7 +142,7 @@ function ServiceCard({ service }: { service: Service }) {
           <Copy>
             {/* Kanit for Service Title */}
             <h3 
-              className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-medium text-[#B9935B] leading-tight"
+              className="text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-medium text-[#B9935B] leading-tight uppercase"
               style={fonts.display}
             >
               {service.title}

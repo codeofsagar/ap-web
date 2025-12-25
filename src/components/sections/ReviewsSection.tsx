@@ -67,7 +67,7 @@ export default function GoldenPrecisionReviews() {
           
           <h2 className="text-4xl md:text-7xl font-bold leading-none uppercase mb-4" style={fonts.display}>
             Stop Sending Traffic <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B9935B] via-[#f3d09a] to-[#B9935B]">
+            <span className=" bg-clip-text bg-gradient-to-r  text-[#B9935B]">
               Into a Black Hole.
             </span>
           </h2>
@@ -171,7 +171,7 @@ export default function GoldenPrecisionReviews() {
           
           <Link 
             href="/contact"
-            className="relative z-10 group inline-flex items-center gap-6 px-12 py-6 bg-[#B9935B] text-black font-semibold uppercase tracking-[0.3em] text-sm transition-transform hover:scale-105"
+            className="relative z-10 group inline-flex items-center gap-6 px-12 py-6 bg-[#B9935B] text-black  uppercase tracking-[0.3em] text-sm transition-transform hover:scale-105 font-[700]"
             style={fonts.body}
           >
             Deploy Buying Machine

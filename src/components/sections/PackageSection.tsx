@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useRef } from "react";
-import { ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight,  Zap } from 'lucide-react';
 
 function PackageSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -117,40 +117,18 @@ function PackageSection() {
                 href="/contact" 
                 className="group flex items-center justify-between bg-[#B9935B] p-10 text-black transition-all hover:bg-white"
               >
-                <span style={fonts.body} className="text-2xl md:text-4xl uppercase ">IGNITE CONVERSIONS</span>
+                <span style={fonts.body} className="text-2xl font-[700] md:text-4xl uppercase ">IGNITE CONVERSIONS</span>
                 <ArrowRight size={40} className="group-hover:translate-x-4 transition-transform" />
               </Link>
               <div className="flex justify-between items-center opacity-40" style={fonts.mono}>
                 <span className="text-[10px] uppercase tracking-widest">Limited Slots Available</span>
-                <span className="text-[10px] uppercase tracking-widest text-right">Q1 2024 Slots Open</span>
+                <span className="text-[10px] uppercase tracking-widest text-right"></span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* --- GUARANTEE SECTION --- */}
-        <div className="mt-40 flex flex-col lg:flex-row items-center justify-between gap-20">
-          <div className="max-w-3xl">
-            <h3 className="text-5xl md:text-7xl mb-8 leading-[0.9]" style={fonts.display}>
-              THE <span className="text-[#B9935B]">IRON-CLAD</span> <br/> REVENUE GUARANTEE
-            </h3>
-            <p className="text-2xl text-gray-400 leading-relaxed" style={fonts.body}>
-              If your new landing page doesn’t hit a <span className="text-white font-bold">10% conversion rate</span> or 
-              outperform your current one within 30 days, we’ll optimize it again for <span className="text-[#B9935B] font-bold">Free</span>.
-            </p>
-          </div>
-
-          <div className="w-full lg:w-auto">
-            <div className="relative border-2 border-[#B9935B] p-12 text-center bg-[#0a0a0a] -rotate-3 hover:rotate-0 transition-transform duration-700">
-                <ShieldCheck size={60} className="mx-auto mb-8 text-[#B9935B]" />
-                <p style={fonts.mono} className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4">Risk Mitigation</p>
-                <h4 style={fonts.display} className="text-3xl text-white leading-tight">
-                  STILL NO RESULTS?<br />
-                  <span className="text-[#B9935B]">100% MONEY BACK.</span>
-                </h4>
-            </div>
-          </div>
-        </div>
+      
       </div>
     </section>
   );

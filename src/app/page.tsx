@@ -10,6 +10,8 @@ import AboutSection from "@/components/sections/AboutSection";
 import PackageSection from "@/components/sections/PackageSection";
 import ReviewsSection from "@/components/sections/ReviewsSection";
 import HomeContact from "@/components/sections/HomeContact";
+import Star from "@/components/sections/Star";
+import Guarantee from "@/components/sections/Guarantee";
 
 
 export default function Home() {
@@ -18,7 +20,9 @@ export default function Home() {
       <HeroSection/>
       
       <AboutSection/>
+      <Star/>
       <PackageSection/>
+      <Guarantee/>
       
       
       <Work />

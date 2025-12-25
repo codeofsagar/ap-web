@@ -81,7 +81,7 @@ export default function TechnologiesLit() {
   }, []);
 
   return (
-    <section className="pb-24 px-4 lg:px-8 bg-white" style={fonts.body}>
+    <section className="pb-24 px-4 lg:px-8 bg-white dark-bg" style={fonts.body}>
       <LetterScroll />
 
       <h4 className="text-4xl md:text-6xl uppercase mb-8" style={fonts.display}>

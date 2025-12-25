@@ -17,7 +17,7 @@ function Contact() {
     <section
       id="contact"
       ref={containerRef}
-      className="min-h-screen text-white flex flex-col justify-center px-4 py-32 lg:px-12 lg:py-40 relative overflow-hidden "
+      className="min-h-screen text-white flex flex-col justify-center  lg:py-40 relative overflow-hidden "
       style={fonts.body}
     >
       {/* --- CUSTOM STYLES FOR ANIMATIONS --- */}
@@ -37,10 +37,7 @@ function Contact() {
 
       {/* Decorative Background Grid */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
-           style={{ 
-               backgroundImage: 'linear-gradient(#B9935B 1px, transparent 1px), linear-gradient(90deg, #B9935B 1px, transparent 1px)', 
-               backgroundSize: '60px 60px' 
-           }}>
+           >
       </div>
 
       {/* --- SECTION HEADER --- */}

@@ -52,25 +52,25 @@ function AboutSection() {
     <section
       ref={containerRef}
       id="about"
-      className="relative min-h-screen py-24 bg-[#0a0a0a] text-white overflow-hidden"
+      className="relative min-h-screen  bg-[#0a0a0a] text-white overflow-hidden"
       style={fonts.body}
     >
       {/* 1. TOP HEADER SECTION */}
-      <div className="container mx-auto px-6 lg:px-12 border-b border-white/10 pb-20">
+      <div className="container mx-auto bg-[#b9935b] px-6 lg:px-12 border-b border-white/10 pb-20">
         <div className="flex flex-col lg:flex-row justify-between items-start gap-10">
           {/* Left: The Technical Label */}
           <div className="lg:w-1/3">
-            <p style={accentStyle} className="text-sm tracking-[0.5em] leading-loose">
+            <p style={fonts.mono} className="text-sm tracking-[0.5em] leading-loose text-black py-5">
               Conversion Architecture <br /> 
-              Strategy / Design 
+              Strategy  Design 
             </p>
           </div>
 
           {/* Right: The Brutalist Headline */}
           <div className="lg:w-2/3">
-            <h2 className="reveal-line text-6xl md:text-7xl lg:text-[10rem] leading-[0.85] " style={fonts.display}>
+            <h2 className="reveal-line text-7xl md:text-7xl lg:text-[10rem] leading-[0.85] mt-10  " style={fonts.display}>
               BEST ADS<br />
-              <span className="text-[#B9935B]" >UGLY PAGE ?</span>
+              <span className="text-black" >UGLY PAGE ?</span>
             </h2>
           </div>
         </div>
@@ -82,12 +82,12 @@ function AboutSection() {
           
           {/* Left: Huge Stat/Label */}
           <div className="lg:col-span-5">
-             <div className="img-viewport relative aspect-[4/5] overflow-hidden border border-[#B9935B]/30">
+             <div className="img-viewport relative aspect-[9/16] overflow-hidden b ">
                 <Image 
-                  src="/images/ss.png" 
+                  src="/web.jpg" 
                   alt="Conversion" 
                   fill 
-                  className="parallax-img object-cover scale-125 grayscale hover:grayscale-0 transition-all duration-700" 
+                  className="" 
                 />
              </div>
           </div>
@@ -113,7 +113,7 @@ function AboutSection() {
               </div>
               <div>
                 <span style={accentStyle} className="text-lg block mb-4">02 / Results</span>
-                <p className="text-xl text-gray-300">We don&apos;t build websites; we build high-converting sales machines.</p>
+                <p className="text-xl text-black">We don&apos;t build websites; we build high-converting sales machines.</p>
               </div>
             </div>
 
@@ -135,42 +135,9 @@ function AboutSection() {
         </div>
       </div>
 
-      {/* 3. AWARDS FOOTER */}
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 border border-white/10 bg-white/5 backdrop-blur-md">
-          <div className="p-12 border-r border-white/10 hover:bg-[#B9935B] group transition-all duration-500">
-            <span style={fonts.mono} className="text-xs uppercase tracking-widest text-[#B9935B] group-hover:text-black">Traffic Retention</span>
-            <div style={fonts.display} className="text-8xl my-4 group-hover:text-black">90%</div>
-            <p className="text-xs uppercase tracking-widest opacity-50 group-hover:text-black">of visitors bounce in the first 3 seconds</p>
-          </div>
+ 
 
-          <div className="p-12 border-r border-white/10 hover:bg-[#B9935B] group transition-all duration-500">
-            <span style={fonts.mono} className="text-xs uppercase tracking-widest text-[#B9935B] group-hover:text-black">Revenue Impact</span>
-            <div style={fonts.display} className="text-8xl my-4 group-hover:text-black">3.2X</div>
-            <p className="text-xs uppercase tracking-widest opacity-50 group-hover:text-black">better conversion than industry averages</p>
-          </div>
-
-          {/* CIRCLE BADGE SECTION */}
-          <div className="p-12 flex items-center justify-center relative overflow-hidden group">
-             {/* Static Star */}
-             <div className="absolute z-10 text-[#B9935B] text-5xl animate-pulse">★</div>
-             
-             {/* Rotating Text */}
-             <div className="animate-spin-slow">
-                <svg viewBox="0 0 100 100" className="w-48 h-48 md:w-56 md:h-56">
-                    <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="transparent"/>
-                    <text className="fill-white/30 text-[7px] uppercase tracking-[0.25em]" style={fonts.mono}>
-                        <textPath xlinkHref="#circlePath">
-                          Award Winning Design • High Performance Architecture • Elite Strategy •
-                        </textPath>
-                    </text>
-                </svg>
-             </div>
-          </div>
-        </div>
-      </div>
-
-      <style jsx>{`
+      <style >{`
         .animate-spin-slow {
           animation: spin 12s linear infinite;
         }

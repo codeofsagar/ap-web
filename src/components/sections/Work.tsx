@@ -78,7 +78,7 @@ export default function Work() {
        <div className="flex justify-center relative top-12">
         <Link 
               href="/work" 
-              className="group relative inline-flex items-center justify-center px-12 py-6 bg-[#B9935B] text-black overflow-hidden font-bold uppercase tracking-wider text-sm transition-all hover:bg-white hover:text-black"
+              className="group relative inline-flex items-center justify-center px-12 py-6 bg-[#B9935B] text-black overflow-hidden font-[700] uppercase tracking-wider text-sm transition-all hover:bg-white hover:text-black"
               style={fonts.body}
             >
               <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-96 group-hover:h-96 opacity-10"></span>
